@@ -1,0 +1,19 @@
+<div class="dashboard">
+  <nav class="navbar">
+    <div class="logo">🗺️ TourPlanner</div>
+    <div class="user-menu">
+      <span class="welcome">Welcome, {{ username }}</span>
+      <button (click)="logout()" class="logout-btn">Logout</button>
+    </div>
+  </nav>
+
+  <main class="content">
+    <h1>My Tours</h1>
+    <p class="subtitle">Manage your bike, hike, running and vacation tours</p>
+
+    <div class="placeholder-box">
+      <p>🚧 Tour List will appear here</p>
+      <p class="hint">Next step: Implement Tour CRUD</p>
+    </div>
+  </main>
+</div>

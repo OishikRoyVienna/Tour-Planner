@@ -1,0 +1,44 @@
+<div class="login-container">
+  <div class="login-card">
+    <h2>TourPlanner Login</h2>
+
+    <form (ngSubmit)="onSubmit()">
+      <!-- Data Binding: [(ngModel)] -->
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          [(ngModel)]="username"
+          name="username"
+          required
+          placeholder="Enter username"
+          [disabled]="isLoading"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="password"
+          name="password"
+          required
+          placeholder="Enter password"
+          [disabled]="isLoading"
+        />
+      </div>
+
+      <button type="submit" [disabled]="isLoading">
+        {{ isLoading ? 'Loading...' : 'Login' }}
+      </button>
+
+      <div *ngIf="message"
+           [class.error]="isError"
+           [class.success]="!isError">
+        {{ message }}
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+.dashboard {
+  min-height: 100vh;
+  background: #f5f7fa;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.welcome {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.logout-btn {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s;
+}
+
+.logout-btn:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.content {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.placeholder-box {
+  background: white;
+  border-radius: 8px;
+  padding: 3rem;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.placeholder-box p {
+  color: #666;
+  margin: 0.5rem 0;
+}
+
+.hint {
+  font-size: 0.9rem;
+  color: #999;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .user-menu {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

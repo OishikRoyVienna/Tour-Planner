@@ -1,0 +1,100 @@
+/* Responsivität: UI responds to window size changes (1 Punkt!) */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1rem;
+}
+
+.login-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #555;
+  font-weight: 500;
+}
+
+input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+button {
+  width: 100%;
+  padding: 0.75rem;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.3s;
+}
+
+button:hover:not(:disabled) {
+  background: #5568d3;
+}
+
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.error {
+  color: #c00;
+  margin-top: 1rem;
+  text-align: center;
+  padding: 0.5rem;
+  background: #fee;
+  border-radius: 4px;
+}
+
+.success {
+  color: #0a0;
+  margin-top: 1rem;
+  text-align: center;
+  padding: 0.5rem;
+  background: #efe;
+  border-radius: 4px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}
