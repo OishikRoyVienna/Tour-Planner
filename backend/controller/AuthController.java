@@ -1,5 +1,6 @@
 package com.tourplanner.controller;
 
+import com.tourplanner.model.RegisteredAccount;
 import com.tourplanner.service.AuthService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,22 +42,26 @@ public class AuthController {
   }
 
   @PostMapping("/register")
-  public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, String> credentials) {
+  public ResponseEntity<Map<String, Object>> register(@RequestBody Map<String, String> body) {
     logger.info("POST /api/auth/register");
 
     Map<String, Object> response = new HashMap<>();
-    User user = authService.register(
-      credentials.get("username"),
-      credentials.get("password")
+    RegisteredAccount account = authService.register(
+      body.get("firstName"),
+      body.get("lastName"),
+      body.get("birthday"),
+      body.get("email"),
+      body.get("username"),
+      body.get("password")
     );
 
-    if (user != null) {
+    if (account != null) {
       response.put("success", true);
       response.put("message", "Registration successful");
       return ResponseEntity.status(201).body(response);
     } else {
       response.put("success", false);
-      response.put("message", "User already exists");
+      response.put("message", "User already exists or invalid username");
       return ResponseEntity.status(400).body(response);
     }
   }

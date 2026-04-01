@@ -1,5 +1,4 @@
-/* Responsivität: UI responds to window size changes (1 Punkt!) */
-.login-container {
+.register-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,13 +7,13 @@
   padding: 1rem;
 }
 
-.login-card {
+.register-card {
   background: white;
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 400px;
+  max-width: 440px;
 }
 
 h2 {
@@ -57,7 +56,7 @@ button {
   border-radius: 4px;
   font-size: 1rem;
   cursor: pointer;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   transition: background 0.3s;
 }
 
@@ -70,14 +69,14 @@ button:disabled {
   cursor: not-allowed;
 }
 
-.register-hint {
+.footer-link {
   margin-top: 1rem;
   text-align: center;
   font-size: 0.9rem;
   color: #666;
 }
 
-.register-hint a {
+.footer-link a {
   color: #667eea;
   font-weight: 500;
 }
@@ -100,9 +99,8 @@ button:disabled {
   border-radius: 4px;
 }
 
-/* Mobile Responsiveness */
 @media (max-width: 480px) {
-  .login-card {
+  .register-card {
     padding: 1.5rem;
   }
 

@@ -1,0 +1,87 @@
+<div class="register-container">
+  <div class="register-card">
+    <h2>Register</h2>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="firstName">First name</label>
+        <input
+          type="text"
+          id="firstName"
+          [(ngModel)]="firstName"
+          name="firstName"
+          required
+          [disabled]="isLoading"
+        />
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last name</label>
+        <input
+          type="text"
+          id="lastName"
+          [(ngModel)]="lastName"
+          name="lastName"
+          required
+          [disabled]="isLoading"
+        />
+      </div>
+      <div class="form-group">
+        <label for="birthday">Birthday</label>
+        <input
+          type="date"
+          id="birthday"
+          [(ngModel)]="birthday"
+          name="birthday"
+          required
+          [disabled]="isLoading"
+        />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="email"
+          name="email"
+          required
+          [disabled]="isLoading"
+        />
+      </div>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          [(ngModel)]="username"
+          name="username"
+          required
+          [disabled]="isLoading"
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="password"
+          name="password"
+          required
+          [disabled]="isLoading"
+        />
+      </div>
+
+      <button type="submit" [disabled]="isLoading">
+        {{ isLoading ? 'Loading...' : 'Register' }}
+      </button>
+
+      <p class="footer-link">
+        Already have an account?
+        <a routerLink="/login">Login</a>
+      </p>
+
+      <div *ngIf="message" [class.error]="isError" [class.success]="!isError">
+        {{ message }}
+      </div>
+    </form>
+  </div>
+</div>

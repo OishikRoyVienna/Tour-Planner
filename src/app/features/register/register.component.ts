@@ -5,21 +5,25 @@ import { Router, RouterLink } from '@angular/router';
 import { InMemoryAuthService } from '../../core/in-memory-auth.service';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
   imports: [FormsModule, CommonModule, RouterLink],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class LoginComponent {
+export class RegisterComponent {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly auth = inject(InMemoryAuthService);
 
-  username: string = '';
-  password: string = '';
-  message: string = '';
-  isError: boolean = false;
-  isLoading: boolean = false;
+  firstName = '';
+  lastName = '';
+  birthday = '';
+  email = '';
+  username = '';
+  password = '';
+  message = '';
+  isError = false;
+  isLoading = false;
 
   constructor(private router: Router) {}
 
@@ -29,14 +33,19 @@ export class LoginComponent {
     this.cdr.detectChanges();
 
     queueMicrotask(() => {
-      const ok = this.auth.login(this.username, this.password);
+      const result = this.auth.register({
+        firstName: this.firstName,
+        lastName: this.lastName,
+        birthday: this.birthday,
+        email: this.email,
+        username: this.username,
+        password: this.password
+      });
       this.isLoading = false;
-      if (ok) {
-        localStorage.setItem('token', 'mock-token');
-        localStorage.setItem('username', this.username);
-        this.router.navigate(['/dashboard']);
+      if (result.success) {
+        this.router.navigate(['/login']);
       } else {
-        this.message = 'Invalid credentials';
+        this.message = result.message;
         this.isError = true;
       }
       this.cdr.detectChanges();
