@@ -1,19 +1,75 @@
 <div class="dashboard">
-  <nav class="navbar">
-    <div class="logo">🗺️ TourPlanner</div>
-    <div class="user-menu">
-      <span class="welcome">Welcome, {{ username }}</span>
-      <button (click)="logout()" class="logout-btn">Logout</button>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">🗺️</span>
+        <div class="brand-text">
+          <span class="brand-name">TourPlanner</span>
+          <span class="brand-tagline">Deine Touren im Blick</span>
+        </div>
+      </div>
+      <div class="user-menu">
+        <div class="user-pill">
+          <span class="avatar" [attr.aria-label]="'Benutzer ' + username">{{ userInitial }}</span>
+          <div class="user-meta">
+            <span class="welcome-label">Willkommen</span>
+            <span class="welcome-name">{{ username }}</span>
+          </div>
+        </div>
+        <button type="button" (click)="logout()" class="logout-btn">Abmelden</button>
+      </div>
     </div>
-  </nav>
+  </header>
 
   <main class="content">
-    <h1>My Tours</h1>
-    <p class="subtitle">Manage your bike, hike, running and vacation tours</p>
+    <section class="page-head">
+      <div class="page-head-copy">
+        <p class="eyebrow">Übersicht</p>
+        <h1>Meine Touren</h1>
+        <p class="subtitle">
+          Plane Rad-, Wander-, Lauf- und Urlaubstouren an einem Ort — bald mit Listen, Karte und
+          Details.
+        </p>
+      </div>
+      <div class="page-head-stats" role="group" aria-label="Kurzübersicht">
+        <div class="stat-card">
+          <span class="stat-value">0</span>
+          <span class="stat-label">Aktive Touren</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">0</span>
+          <span class="stat-label">Demnächst</span>
+        </div>
+      </div>
+    </section>
 
-    <div class="placeholder-box">
-      <p>🚧 Tour List will appear here</p>
-      <p class="hint">Next step: Implement Tour CRUD</p>
-    </div>
+    <section class="quick-section" aria-labelledby="quick-heading">
+      <h2 id="quick-heading" class="section-title">Neue Tour</h2>
+      <div class="quick-grid quick-grid--single">
+        @for (link of quickLinks; track link.title) {
+          <button type="button" class="quick-card quick-card--{{ link.accent }}" disabled>
+            <span class="quick-icon" aria-hidden="true">{{ link.icon }}</span>
+            <span class="quick-title">{{ link.title }}</span>
+            <span class="quick-desc">{{ link.desc }}</span>
+            <span class="quick-badge">Bald</span>
+          </button>
+        }
+      </div>
+    </section>
+
+    <section class="empty-section" aria-labelledby="empty-heading">
+      <h2 id="empty-heading" class="visually-hidden">Tourliste</h2>
+      <div class="empty-card">
+        <div class="empty-visual" aria-hidden="true">
+          <span class="empty-orbit"></span>
+          <span class="empty-pin">📍</span>
+        </div>
+        <h3 class="empty-title">Noch keine Touren</h3>
+        <p class="empty-text">
+          Hier erscheint deine Tourliste, sobald die Verwaltung (CRUD) angebunden ist.
+        </p>
+        <p class="empty-hint">Nächster Schritt: Touren anlegen, bearbeiten und löschen</p>
+      </div>
+    </section>
   </main>
 </div>
