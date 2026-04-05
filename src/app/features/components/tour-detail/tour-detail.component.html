@@ -1,0 +1,75 @@
+<div class="tour-detail-container">
+  <div *ngIf="loading" class="loading">Loading tour details...</div>
+
+  <div *ngIf="error" class="error">❌ {{ error }}</div>
+
+  <div *ngIf="tour && !loading" class="tour-detail">
+    <!-- Header -->
+    <div class="tour-header">
+      <h1>{{ tour.name }}</h1>
+      <div class="tour-actions">
+        <button (click)="editTour()" class="btn-edit">✏️ Edit</button>
+        <button (click)="deleteTour()" class="btn-delete">🗑️ Delete</button>
+        <button (click)="router.navigate(['/tours'])" class="btn-back">← Back</button>
+      </div>
+    </div>
+
+    <!-- Image -->
+    <div *ngIf="tour.imagePath" class="tour-image">
+      <img [src]="tour.imagePath" [alt]="tour.name">
+    </div>
+
+    <!-- Basic Info -->
+    <div class="tour-section">
+      <h3>Basic Information</h3>
+      <div class="info-grid">
+        <div class="info-item">
+          <strong>From:</strong> {{ tour.fromLocation }}
+        </div>
+        <div class="info-item">
+          <strong>To:</strong> {{ tour.toLocation }}
+        </div>
+        <div class="info-item">
+          <strong>Type:</strong> {{ getTransportIcon(tour.transportType) }} {{ tour.transportType }}
+        </div>
+        <div class="info-item" *ngIf="tour.distance">
+          <strong>Distance:</strong> {{ tour.distance }} km
+        </div>
+        <div class="info-item" *ngIf="tour.estimatedTime">
+          <strong>Estimated Time:</strong> {{ tour.estimatedTime }} min
+        </div>
+        <div class="info-item" *ngIf="tour.childFriendly !== undefined">
+          <strong>Child Friendly:</strong> {{ tour.childFriendly ? 'Yes ✅' : 'No ❌' }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div *ngIf="tour.description" class="tour-section">
+      <h3>Description</h3>
+      <p>{{ tour.description }}</p>
+    </div>
+
+    <!-- Route Information -->
+    <div *ngIf="tour.routeInformation" class="tour-section">
+      <h3>Route Information</h3>
+      <p>{{ tour.routeInformation }}</p>
+    </div>
+
+    <!-- Map Placeholder -->
+    <div class="tour-section">
+      <h3>Map</h3>
+      <div class="map-placeholder">
+        <p>🗺️ Map will be displayed here</p>
+        <small>Integration with Google Maps or Leaflet</small>
+      </div>
+    </div>
+
+    <!-- Tour Logs Section -->
+    <div class="tour-section">
+      <h3>Tour Logs</h3>
+      <p><em>Tour logs will be displayed here</em></p>
+      <!-- TODO: TourLogListComponent integrieren -->
+    </div>
+  </div>
+</div>

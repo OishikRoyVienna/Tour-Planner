@@ -1,20 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-
+import TourListComponent from '../components/tour-list/tour-list.component';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TourListComponent],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
 })
 export class DashboardComponent implements OnInit {
+  private tourService = inject(TourService);
+
   username: string = 'User';
+  activeToursCount = 0;
+  upcomingToursCount = 0;
 
   readonly quickLinks = [
-    { icon: '➕', title: 'Neue Tour', desc: 'Plan anlegen', accent: 'violet' }
+    { icon: '➕', title: 'Neue Tour', desc: 'Plan anlegen', accent: 'violet', route: '/tours/new' }  // ← route HINZUFÜGEN!
   ] as const;
+
+  currentUserId = 1;  // ← NEU: TODO: Aus Auth-Service holen
 
   constructor(private router: Router) {}
 
@@ -28,6 +34,24 @@ export class DashboardComponent implements OnInit {
     if (storedUser) {
       this.username = storedUser;
     }
+
+    this.loadStats();
+  }
+
+  loadStats(): void {
+    this.tourService.getTours(this.currentUserId).subscribe({
+      next: (tours) => {
+        this.activeToursCount = tours.length;
+        this.upcomingToursCount = 0;
+      },
+      error: (err) => {
+        console.error('Error loading stats:', err);
+      }
+    });
+  }
+
+  createNewTour(): void {
+    this.router.navigate(['/tours/new']);
   }
 
   logout(): void {

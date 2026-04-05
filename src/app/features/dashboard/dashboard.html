@@ -47,11 +47,15 @@
       <h2 id="quick-heading" class="section-title">Neue Tour</h2>
       <div class="quick-grid quick-grid--single">
         @for (link of quickLinks; track link.title) {
-          <button type="button" class="quick-card quick-card--{{ link.accent }}" disabled>
+          <button
+            type="button"
+            class="quick-card quick-card--{{ link.accent }}"
+            (click)="createNewTour()"
+            [attr.aria-label]="link.title"
+          >
             <span class="quick-icon" aria-hidden="true">{{ link.icon }}</span>
             <span class="quick-title">{{ link.title }}</span>
             <span class="quick-desc">{{ link.desc }}</span>
-            <span class="quick-badge">Bald</span>
           </button>
         }
       </div>
