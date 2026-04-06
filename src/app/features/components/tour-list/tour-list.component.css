@@ -1,7 +1,67 @@
 .tour-list {
   padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
+/* ← NEU: Page Header Styles */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #eee;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.brand:hover {
+  transform: scale(1.02);
+}
+
+.brand h1 {
+  margin: 0;
+  color: #667eea;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.brand:hover h1 {
+  color: #5568d3;
+}
+
+.tagline {
+  margin: 0.25rem 0 0 0;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.btn-dashboard {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s;
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+}
+
+.btn-dashboard:hover {
+  background: linear-gradient(135deg, #5568d3 0%, #6a3f91 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+}
+
+/* Existing Styles */
 .button-group {
   margin-bottom: 1rem;
   display: flex;
@@ -68,6 +128,11 @@
   margin: 0.5rem 0;
   border-radius: 8px;
   background: #fff;
+  transition: box-shadow 0.3s;
+}
+
+.tour-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .tour-card h3 {
@@ -93,10 +158,12 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.85rem;
+  transition: all 0.3s;
 }
 
 .actions button:hover {
   background: #e0e0e0;
+  transform: translateY(-1px);
 }
 
 .btn-view {
@@ -115,4 +182,29 @@
   background: #f44336;
   color: white;
   border: none;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .brand h1 {
+    font-size: 1.5rem;
+  }
+
+  .btn-dashboard {
+    width: 100%;
+  }
+
+  .button-group {
+    flex-wrap: wrap;
+  }
+
+  .actions {
+    flex-wrap: wrap;
+  }
 }

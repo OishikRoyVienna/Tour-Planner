@@ -1,4 +1,15 @@
 <div class="tour-list">
+  <!-- ← NEU: Header mit Logo und Dashboard-Button -->
+  <div class="page-header">
+    <div class="brand" (click)="goToDashboard()" title="Back to Dashboard">
+      <h1>🗺️ TourPlanner</h1>
+      <p class="tagline">Deine Touren im Blick</p>
+    </div>
+    <button (click)="goToDashboard()" class="btn-dashboard">
+      ← Back to Dashboard
+    </button>
+  </div>
+
   <h2>My Tours</h2>
 
   <div class="button-group">

@@ -66,5 +66,9 @@ export class TourListComponent implements OnInit {  // ← ✅ "export" VOR "cla
   createNewTour(): void {
     this.router.navigate(['/tours/new']);
   }
+
+  goToDashboard(): void {
+    this.router.navigate(['/dashboard']);  // Oder ['/'] wenn Dashboard die Startseite ist
+  }
+
 }
-// ← KEIN "export default" am Ende! Fertig!
