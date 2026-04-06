@@ -1,8 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';  // ← HINZUFÜGEN für Navigation!
+import { Router } from '@angular/router';
 import { TourService } from '../../services/tour.service';
 import { Tour } from '../../models/tour.model';
+import { HttpErrorResponse } from '@angular/common/http';  // ← HINZUFÜGEN!
 
 @Component({
   selector: 'app-tour-list',
@@ -11,9 +12,10 @@ import { Tour } from '../../models/tour.model';
   templateUrl: './tour-list.component.html',
   styleUrl: './tour-list.component.css'
 })
-class TourListComponent implements OnInit {
-  private tourService = inject(TourService);
-  private router = inject(Router);  // ← HINZUFÜGEN!
+export class TourListComponent implements OnInit {  // ← ✅ "export" VOR "class"!
+
+  private tourService: TourService = inject(TourService);  // ← Typ hinzufügen!
+  private router = inject(Router);
 
   tours: Tour[] = [];
   loading = false;
@@ -29,60 +31,40 @@ class TourListComponent implements OnInit {
     this.error = null;
 
     this.tourService.getTours(this.currentUserId).subscribe({
-      next: (tours) => {
+      next: (tours: Tour[]) => {  // ← Typ hinzufügen!
         this.tours = tours;
         this.loading = false;
       },
-      error: (err) => {
+      error: (err: HttpErrorResponse) => {  // ← Typ hinzufügen!
         this.error = err.message;
         this.loading = false;
       }
     });
   }
 
-  // ========== FEHLENDE METHODEN HINZUFÜGEN ==========
-
-  /**
-   * Navigate to tour detail page
-   */
   viewTour(id: number): void {
     this.router.navigate(['/tours', id]);
   }
 
-  /**
-   * Navigate to tour edit page
-   */
   editTour(id: number): void {
     this.router.navigate(['/tours', id, 'edit']);
   }
 
-  /**
-   * Delete a tour with confirmation
-   */
   deleteTour(id: number): void {
     if (confirm('Are you sure you want to delete this tour?')) {
       this.tourService.deleteTour(id).subscribe({
         next: () => {
-          // Remove from local list
           this.tours = this.tours.filter(t => t.id !== id);
-          console.log('✅ Tour deleted');
         },
-        error: (err) => {
+        error: (err: HttpErrorResponse) => {  // ← Typ hinzufügen!
           this.error = err.message;
-          console.error('❌ Error deleting tour:', err);
         }
       });
     }
   }
 
-  /**
-   * Navigate to create new tour page
-   */
   createNewTour(): void {
     this.router.navigate(['/tours/new']);
   }
-
-
 }
-
-export default TourListComponent;
+// ← KEIN "export default" am Ende! Fertig!

@@ -1,7 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import TourListComponent from '../components/tour-list/tour-list.component';
+import { HttpErrorResponse } from '@angular/common/http';  // ← NEU!
+
+// ← WICHTIG: Named Import, nicht default!
+import { TourListComponent } from '../components/tour-list/tour-list.component';
+import { TourService } from '../services/tour.service';  // ← NEU! Import hinzufügen!
+import { Tour } from '../models/tour.model';  // ← NEU!
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -10,17 +16,18 @@ import TourListComponent from '../components/tour-list/tour-list.component';
   styleUrls: ['./dashboard.css']
 })
 export class DashboardComponent implements OnInit {
-  private tourService = inject(TourService);
+  // ← Typ explizit angeben!
+  private tourService: TourService = inject(TourService);
 
   username: string = 'User';
   activeToursCount = 0;
   upcomingToursCount = 0;
 
   readonly quickLinks = [
-    { icon: '➕', title: 'Neue Tour', desc: 'Plan anlegen', accent: 'violet', route: '/tours/new' }  // ← route HINZUFÜGEN!
+    { icon: '➕', title: 'Neue Tour', desc: 'Plan anlegen', accent: 'violet', route: '/tours/new' }
   ] as const;
 
-  currentUserId = 1;  // ← NEU: TODO: Aus Auth-Service holen
+  currentUserId = 1;
 
   constructor(private router: Router) {}
 
@@ -34,17 +41,17 @@ export class DashboardComponent implements OnInit {
     if (storedUser) {
       this.username = storedUser;
     }
-
     this.loadStats();
   }
 
   loadStats(): void {
     this.tourService.getTours(this.currentUserId).subscribe({
-      next: (tours) => {
+      // ← Explizite Typen für Callbacks!
+      next: (tours: Tour[]) => {
         this.activeToursCount = tours.length;
         this.upcomingToursCount = 0;
       },
-      error: (err) => {
+      error: (err: HttpErrorResponse) => {
         console.error('Error loading stats:', err);
       }
     });

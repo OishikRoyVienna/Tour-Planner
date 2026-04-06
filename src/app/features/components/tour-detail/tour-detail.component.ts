@@ -1,8 +1,11 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TourService } from '../../services/tour.service';
+import { HttpErrorResponse } from '@angular/common/http';  // ← Für Error-Typ
+
+// ← NUR EINMAL Tour importieren!
 import { Tour } from '../../models/tour.model';
+import { TourService } from '../../services/tour.service';
 
 @Component({
   selector: 'app-tour-detail',
@@ -12,7 +15,7 @@ import { Tour } from '../../models/tour.model';
   styleUrl: './tour-detail.component.css'
 })
 export class TourDetailComponent implements OnInit {
-  private tourService = inject(TourService);
+  private tourService: TourService = inject(TourService);
   private route = inject(ActivatedRoute);
   protected router = inject(Router);
 
@@ -34,11 +37,11 @@ export class TourDetailComponent implements OnInit {
     this.error = null;
 
     this.tourService.getTour(id).subscribe({
-      next: (tour) => {
+      next: (tour: Tour) => {  // ← Typ hinzufügen!
         this.tour = tour;
         this.loading = false;
       },
-      error: (err) => {
+      error: (err: HttpErrorResponse) => {  // ← Typ hinzufügen!
         this.error = err.message;
         this.loading = false;
       }
@@ -53,7 +56,7 @@ export class TourDetailComponent implements OnInit {
         next: () => {
           this.router.navigate(['/tours']);
         },
-        error: (err) => {
+        error: (err: HttpErrorResponse) => {
           this.error = err.message;
         }
       });
