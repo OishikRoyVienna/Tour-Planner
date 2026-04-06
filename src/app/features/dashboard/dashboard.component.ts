@@ -65,6 +65,22 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/tours', id]);
   }
 
+  deleteTour(id: number): void {
+    if (!confirm('Moechtest du diese Tour wirklich loeschen?')) {
+      return;
+    }
+
+    this.tourService.deleteTour(id).subscribe({
+      next: () => {
+        this.tours = this.tours.filter(tour => tour.id !== id);
+        this.activeToursCount = this.tours.length;
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error('Error deleting tour:', err);
+      }
+    });
+  }
+
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('username');

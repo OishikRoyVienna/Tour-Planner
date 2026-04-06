@@ -333,6 +333,22 @@ h1 {
   cursor: pointer;
 }
 
+.tour-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.tour-delete-btn {
+  border: 1px solid #f1c8c8;
+  background: #fff5f5;
+  color: #b42318;
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 .quick-card::before {
   content: '';
   position: absolute;

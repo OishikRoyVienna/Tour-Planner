@@ -83,7 +83,10 @@
               <strong>{{ tour.name }}</strong>
               <span>{{ tour.fromLocation }} → {{ tour.toLocation }}</span>
             </div>
-            <button type="button" class="tour-open-btn" (click)="viewTour(tour.id!)">Details</button>
+            <div class="tour-actions">
+              <button type="button" class="tour-open-btn" (click)="viewTour(tour.id!)">Details</button>
+              <button type="button" class="tour-delete-btn" (click)="deleteTour(tour.id!)">Loeschen</button>
+            </div>
           </li>
         </ul>
       </div>
