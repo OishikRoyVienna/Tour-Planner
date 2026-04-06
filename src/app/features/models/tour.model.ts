@@ -4,7 +4,7 @@ export interface Tour {
   description?: string;
   fromLocation: string;
   toLocation: string;
-  transportType: 'BIKE' | 'HIKE' | 'RUNNING' | 'VACATION';
+  transportType: 'BIKE' | 'HIKE' | 'RUNNING' | 'VACATION' | 'CAR';
   distance?: number;
   estimatedTime?: number;
   routeInformation?: string;

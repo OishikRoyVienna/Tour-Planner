@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { TourService } from '../../services/tour.service';
 import { Tour } from '../../models/tour.model';
-import { HttpErrorResponse } from '@angular/common/http';  // ← HINZUFÜGEN!
 
 @Component({
   selector: 'app-tour-list',
@@ -13,8 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';  // ← HINZUFÜGEN!
   styleUrl: './tour-list.component.css'
 })
 export class TourListComponent implements OnInit {  // ← ✅ "export" VOR "class"!
-
-  private tourService: TourService = inject(TourService);  // ← Typ hinzufügen!
+  private tourService: TourService = inject(TourService);
   private router = inject(Router);
 
   tours: Tour[] = [];
@@ -31,15 +29,19 @@ export class TourListComponent implements OnInit {  // ← ✅ "export" VOR "cla
     this.error = null;
 
     this.tourService.getTours(this.currentUserId).subscribe({
-      next: (tours: Tour[]) => {  // ← Typ hinzufügen!
+      next: (tours: Tour[]) => {
         this.tours = tours;
         this.loading = false;
       },
-      error: (err: HttpErrorResponse) => {  // ← Typ hinzufügen!
+      error: (err) => {
         this.error = err.message;
         this.loading = false;
       }
     });
+  }
+
+  goToDashboard(): void {
+    this.router.navigate(['/dashboard']);
   }
 
   viewTour(id: number): void {
@@ -56,7 +58,7 @@ export class TourListComponent implements OnInit {  // ← ✅ "export" VOR "cla
         next: () => {
           this.tours = this.tours.filter(t => t.id !== id);
         },
-        error: (err: HttpErrorResponse) => {  // ← Typ hinzufügen!
+        error: (err) => {
           this.error = err.message;
         }
       });
@@ -66,9 +68,4 @@ export class TourListComponent implements OnInit {  // ← ✅ "export" VOR "cla
   createNewTour(): void {
     this.router.navigate(['/tours/new']);
   }
-
-  goToDashboard(): void {
-    this.router.navigate(['/dashboard']);  // Oder ['/'] wenn Dashboard die Startseite ist
-  }
-
 }

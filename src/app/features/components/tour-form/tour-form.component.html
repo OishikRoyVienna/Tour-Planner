@@ -1,110 +1,76 @@
 <div class="tour-form-container">
   <h2>{{ isEditMode ? 'Edit Tour' : 'Create New Tour' }}</h2>
 
-  <div *ngIf="error" class="error-message">
-    ❌ {{ error }}
-  </div>
+  <div *ngIf="error" class="error-message">❌ {{ error }}</div>
 
   <form (ngSubmit)="onSubmit()" class="tour-form">
-    <!-- Name -->
+    <!-- Tour Name -->
     <div class="form-group">
       <label for="name">Tour Name *</label>
-      <input
-        type="text"
-        id="name"
-        [(ngModel)]="tour.name"
-        name="name"
-        required
-        placeholder="Enter tour name"
-      >
+      <input type="text" id="name" [(ngModel)]="tour.name" name="name" required placeholder="Enter tour name">
     </div>
 
     <!-- Description -->
     <div class="form-group">
       <label for="description">Description</label>
-      <textarea
-        id="description"
-        [(ngModel)]="tour.description"
-        name="description"
-        rows="3"
-        placeholder="Enter description"
-      ></textarea>
+      <textarea id="description" [(ngModel)]="tour.description" name="description" rows="4" placeholder="Enter description"></textarea>
     </div>
 
-    <!-- Locations -->
+    <!-- From & To Location -->
     <div class="form-row">
       <div class="form-group">
         <label for="fromLocation">From Location *</label>
-        <input
-          type="text"
-          id="fromLocation"
-          [(ngModel)]="tour.fromLocation"
-          name="fromLocation"
-          required
-          placeholder="Starting point"
-        >
+        <input type="text" id="fromLocation" [(ngModel)]="tour.fromLocation" name="fromLocation" required placeholder="Starting point">
       </div>
-
       <div class="form-group">
         <label for="toLocation">To Location *</label>
-        <input
-          type="text"
-          id="toLocation"
-          [(ngModel)]="tour.toLocation"
-          name="toLocation"
-          required
-          placeholder="Destination"
-        >
+        <input type="text" id="toLocation" [(ngModel)]="tour.toLocation" name="toLocation" required placeholder="Destination">
       </div>
     </div>
 
     <!-- Transport Type -->
     <div class="form-group">
       <label for="transportType">Transport Type</label>
-      <select
-        id="transportType"
-        [(ngModel)]="tour.transportType"
-        name="transportType"
-      >
-        <option *ngFor="let type of transportTypes" [value]="type">
-          {{ type }}
-        </option>
+      <select id="transportType" [(ngModel)]="tour.transportType" name="transportType">
+        <option *ngFor="let type of transportTypes" [value]="type">{{ type }}</option>
       </select>
     </div>
 
-    <!-- Distance & Time -->
+    <!-- Distance & Estimated Time -->
     <div class="form-row">
       <div class="form-group">
         <label for="distance">Distance (km)</label>
-        <input
-          type="number"
-          id="distance"
-          [(ngModel)]="tour.distance"
-          name="distance"
-          min="0"
-          step="0.1"
-          placeholder="0.0"
-        >
+        <input type="number" id="distance" [(ngModel)]="tour.distance" name="distance" min="0" step="0.1" placeholder="0.0">
       </div>
-
       <div class="form-group">
         <label for="estimatedTime">Estimated Time (minutes)</label>
-        <input
-          type="number"
-          id="estimatedTime"
-          [(ngModel)]="tour.estimatedTime"
-          name="estimatedTime"
-          min="0"
-          placeholder="0"
-        >
+        <input type="number" id="estimatedTime" [(ngModel)]="tour.estimatedTime" name="estimatedTime" min="0" placeholder="0">
       </div>
+    </div>
+
+    <!-- Route Information -->
+    <div class="form-group">
+      <label for="routeInformation">Route Information</label>
+      <textarea id="routeInformation" [(ngModel)]="tour.routeInformation" name="routeInformation" rows="3" placeholder="Enter route details"></textarea>
+    </div>
+
+    <!-- Image Path -->
+    <div class="form-group">
+      <label for="imagePath">Image URL</label>
+      <input type="url" id="imagePath" [(ngModel)]="tour.imagePath" name="imagePath" placeholder="https://example.com/image.jpg">
+    </div>
+
+    <!-- Child Friendly -->
+    <div class="form-group checkbox-group">
+      <label>
+        <input type="checkbox" [(ngModel)]="tour.childFriendly" name="childFriendly">
+        Child Friendly
+      </label>
     </div>
 
     <!-- Buttons -->
     <div class="form-actions">
-      <button type="button" (click)="onCancel()" class="btn-secondary">
-        Cancel
-      </button>
+      <button type="button" (click)="onCancel()" class="btn-secondary">Cancel</button>
       <button type="submit" [disabled]="saving" class="btn-primary">
         {{ saving ? 'Saving...' : (isEditMode ? 'Update Tour' : 'Create Tour') }}
       </button>

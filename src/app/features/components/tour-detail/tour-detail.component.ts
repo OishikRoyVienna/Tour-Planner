@@ -1,20 +1,19 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';  // ← Für Error-Typ
-
-// ← NUR EINMAL Tour importieren!
+import { HttpErrorResponse } from '@angular/common/http';
 import { Tour } from '../../models/tour.model';
 import { TourService } from '../../services/tour.service';
+import { TourLogListComponent } from '../tour-log-list/tour-log-list.component';
 
 @Component({
   selector: 'app-tour-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TourLogListComponent],
   templateUrl: './tour-detail.component.html',
   styleUrl: './tour-detail.component.css'
 })
-export class TourDetailComponent implements OnInit {
+export class TourDetailComponent implements OnInit {  // ← ✅ "export" VOR "class"!
   private tourService: TourService = inject(TourService);
   private route = inject(ActivatedRoute);
   protected router = inject(Router);
@@ -37,11 +36,11 @@ export class TourDetailComponent implements OnInit {
     this.error = null;
 
     this.tourService.getTour(id).subscribe({
-      next: (tour: Tour) => {  // ← Typ hinzufügen!
+      next: (tour: Tour) => {
         this.tour = tour;
         this.loading = false;
       },
-      error: (err: HttpErrorResponse) => {  // ← Typ hinzufügen!
+      error: (err: HttpErrorResponse) => {
         this.error = err.message;
         this.loading = false;
       }
@@ -54,7 +53,7 @@ export class TourDetailComponent implements OnInit {
     if (confirm('Are you sure you want to delete this tour?')) {
       this.tourService.deleteTour(this.tour.id).subscribe({
         next: () => {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/tours']);
         },
         error: (err: HttpErrorResponse) => {
           this.error = err.message;

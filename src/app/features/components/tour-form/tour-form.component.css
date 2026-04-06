@@ -1,27 +1,31 @@
-.tour-form-container {
+.tour-log-form-container {
   max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+  margin: 2rem auto;
+  padding: 0 20px;
 }
 
 h2 {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   color: #333;
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
 }
 
 .error-message {
-  background: #ffebee;
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
   color: #c62828;
   padding: 1rem;
-  border-radius: 4px;
-  margin-bottom: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #c62828;
 }
 
-.tour-form {
-  background: #fff;
+.tour-log-form {
+  background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%);
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
@@ -33,6 +37,7 @@ h2 {
   margin-bottom: 0.5rem;
   font-weight: 600;
   color: #555;
+  font-size: 0.95rem;
 }
 
 .form-group input,
@@ -40,17 +45,19 @@ h2 {
 .form-group select {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
   font-size: 1rem;
+  transition: all 0.3s;
+  box-sizing: border-box;
 }
 
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #2196F3;
-  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .form-row {
@@ -59,15 +66,26 @@ h2 {
   gap: 1rem;
 }
 
-.checkbox-group label {
+.rating-input {
   display: flex;
-  align-items: center;
+  gap: 0.5rem;
+  font-size: 2.5rem;
   cursor: pointer;
 }
 
-.checkbox-group input[type="checkbox"] {
-  width: auto;
-  margin-right: 0.5rem;
+.star {
+  color: #e0e0e0;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.star.filled {
+  color: #FFC107;
+}
+
+.star:hover {
+  transform: scale(1.2);
+  color: #FFC107;
 }
 
 .form-actions {
@@ -75,43 +93,48 @@ h2 {
   gap: 1rem;
   justify-content: flex-end;
   margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid #ddd;
+  padding-top: 1.5rem;
+  border-top: 2px solid #e0e0e0;
 }
 
-.btn-primary,
-.btn-secondary {
-  padding: 0.75rem 1.5rem;
+.btn-primary, .btn-secondary {
+  padding: 0.75rem 2rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s;
+  font-weight: 600;
+  transition: all 0.3s;
 }
 
 .btn-primary {
-  background: #2196F3;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: #1976D2;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
 }
 
 .btn-primary:disabled {
-  background: #90caf9;
+  background: #ccc;
   cursor: not-allowed;
 }
 
 .btn-secondary {
   background: #f5f5f5;
   color: #333;
+  border: 2px solid #ddd;
 }
 
 .btn-secondary:hover {
   background: #e0e0e0;
+  border-color: #ccc;
 }
 
+/* Mobile Responsiveness */
 @media (max-width: 600px) {
   .form-row {
     grid-template-columns: 1fr;
@@ -121,8 +144,15 @@ h2 {
     flex-direction: column;
   }
 
-  .btn-primary,
-  .btn-secondary {
+  .btn-primary, .btn-secondary {
     width: 100%;
+  }
+
+  .tour-log-form {
+    padding: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
   }
 }

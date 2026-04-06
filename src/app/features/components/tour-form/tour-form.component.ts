@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';  // ← WICHTIG für Forms!
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TourService } from '../../services/tour.service';
 import { Tour } from '../../models/tour.model';
@@ -8,11 +8,11 @@ import { Tour } from '../../models/tour.model';
 @Component({
   selector: 'app-tour-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],  // ← FormsModule für ngModel!
+  imports: [CommonModule, FormsModule],
   templateUrl: './tour-form.component.html',
   styleUrl: './tour-form.component.css'
 })
-export class TourFormComponent implements OnInit {
+export class TourFormComponent implements OnInit {  // ← ✅ "export" VOR "class"!
   private tourService = inject(TourService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -27,7 +27,7 @@ export class TourFormComponent implements OnInit {
     estimatedTime: 0,
     routeInformation: '',
     imagePath: '',
-    userId: 1,  // TODO: Aus Auth-Service holen
+    userId: 1,
     popularity: 0,
     childFriendly: false
   };
@@ -71,7 +71,6 @@ export class TourFormComponent implements OnInit {
     this.error = null;
 
     if (this.isEditMode && this.tourId) {
-      // Update existing tour
       this.tourService.updateTour(this.tourId, this.tour).subscribe({
         next: () => {
           this.saving = false;
@@ -83,11 +82,10 @@ export class TourFormComponent implements OnInit {
         }
       });
     } else {
-      // Create new tour
       this.tourService.createTour(this.tour as Omit<Tour, 'id'>).subscribe({
-        next: () => {
+        next: (newTour) => {
           this.saving = false;
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/tours', newTour.id]);
         },
         error: (err) => {
           this.error = err.message;
