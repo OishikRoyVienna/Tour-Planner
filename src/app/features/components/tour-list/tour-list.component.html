@@ -1,0 +1,32 @@
+<div class="tour-list">
+  <h2>My Tours</h2>
+
+  <div class="button-group">
+    <button (click)="loadTours()" class="btn-refresh">🔄 Refresh</button>
+    <button (click)="createNewTour()" class="btn-primary">+ New Tour</button>
+  </div>
+
+  <div *ngIf="loading" class="loading">⏳ Loading tours...</div>
+
+  <div *ngIf="error" class="error">❌ {{ error }}</div>
+
+  <ul *ngIf="!loading && !error && tours.length > 0" class="tours">
+    <li *ngFor="let tour of tours" class="tour-card">
+      <h3>{{ tour.name }}</h3>
+      <p><strong>📍</strong> {{ tour.fromLocation }} → {{ tour.toLocation }}</p>
+      <p><strong>🚴</strong> {{ tour.transportType }}</p>
+      <p *ngIf="tour.distance"><strong>📏</strong> {{ tour.distance }} km</p>
+      <p *ngIf="tour.estimatedTime"><strong>⏱️</strong> {{ tour.estimatedTime }} min</p>
+
+      <div class="actions">
+        <button (click)="viewTour(tour.id!)" class="btn-view">👁️ View</button>
+        <button (click)="editTour(tour.id!)" class="btn-edit">✏️ Edit</button>
+        <button (click)="deleteTour(tour.id!)" class="btn-delete">🗑️ Delete</button>
+      </div>
+    </li>
+  </ul>
+
+  <p *ngIf="!loading && !error && tours.length === 0" class="empty">
+    🎒 No tours found. Create your first tour!
+  </p>
+</div>
