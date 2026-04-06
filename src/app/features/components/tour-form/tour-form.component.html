@@ -1,77 +1,215 @@
 <div class="tour-form-container">
-  <h2>{{ isEditMode ? 'Edit Tour' : 'Create New Tour' }}</h2>
+  <div class="form-header">
+    <div class="header-icon">🗺️</div>
+    <h2>{{ isEditMode ? 'Edit Tour' : 'Create New Tour' }}</h2>
+    <p class="subtitle">{{ isEditMode ? 'Update your tour details' : 'Plan your next adventure' }}</p>
+  </div>
 
-  <div *ngIf="error" class="error-message">❌ {{ error }}</div>
+  <div *ngIf="error" class="error-message">
+    <span class="error-icon">⚠️</span>
+    {{ error }}
+  </div>
 
   <form (ngSubmit)="onSubmit()" class="tour-form">
-    <!-- Tour Name -->
-    <div class="form-group">
-      <label for="name">Tour Name *</label>
-      <input type="text" id="name" [(ngModel)]="tour.name" name="name" required placeholder="Enter tour name">
-    </div>
+    <!-- Section: Basic Information -->
+    <div class="form-section">
+      <h3 class="section-title">
+        <span class="section-icon">📋</span>
+        Basic Information
+      </h3>
 
-    <!-- Description -->
-    <div class="form-group">
-      <label for="description">Description</label>
-      <textarea id="description" [(ngModel)]="tour.description" name="description" rows="4" placeholder="Enter description"></textarea>
-    </div>
-
-    <!-- From & To Location -->
-    <div class="form-row">
       <div class="form-group">
-        <label for="fromLocation">From Location *</label>
-        <input type="text" id="fromLocation" [(ngModel)]="tour.fromLocation" name="fromLocation" required placeholder="Starting point">
+        <label for="name" class="required">Tour Name</label>
+        <input
+          type="text"
+          id="name"
+          [(ngModel)]="tour.name"
+          name="name"
+          required
+          placeholder="e.g., Alpine Adventure Hike"
+          class="form-input"
+        >
+        <span class="input-hint">Give your tour a memorable name</span>
       </div>
-      <div class="form-group">
-        <label for="toLocation">To Location *</label>
-        <input type="text" id="toLocation" [(ngModel)]="tour.toLocation" name="toLocation" required placeholder="Destination">
-      </div>
-    </div>
 
-    <!-- Transport Type -->
-    <div class="form-group">
-      <label for="transportType">Transport Type</label>
-      <select id="transportType" [(ngModel)]="tour.transportType" name="transportType">
-        <option *ngFor="let type of transportTypes" [value]="type">{{ type }}</option>
-      </select>
-    </div>
-
-    <!-- Distance & Estimated Time -->
-    <div class="form-row">
       <div class="form-group">
-        <label for="distance">Distance (km)</label>
-        <input type="number" id="distance" [(ngModel)]="tour.distance" name="distance" min="0" step="0.1" placeholder="0.0">
-      </div>
-      <div class="form-group">
-        <label for="estimatedTime">Estimated Time (minutes)</label>
-        <input type="number" id="estimatedTime" [(ngModel)]="tour.estimatedTime" name="estimatedTime" min="0" placeholder="0">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          [(ngModel)]="tour.description"
+          name="description"
+          rows="4"
+          placeholder="Describe your tour, highlights, special features..."
+          class="form-textarea"
+        ></textarea>
       </div>
     </div>
 
-    <!-- Route Information -->
-    <div class="form-group">
-      <label for="routeInformation">Route Information</label>
-      <textarea id="routeInformation" [(ngModel)]="tour.routeInformation" name="routeInformation" rows="3" placeholder="Enter route details"></textarea>
+    <!-- Section: Route -->
+    <div class="form-section">
+      <h3 class="section-title">
+        <span class="section-icon">📍</span>
+        Route Details
+      </h3>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fromLocation" class="required">From Location</label>
+          <div class="input-with-icon">
+            <span class="input-icon">🚩</span>
+            <input
+              type="text"
+              id="fromLocation"
+              [(ngModel)]="tour.fromLocation"
+              name="fromLocation"
+              required
+              placeholder="Starting point"
+              class="form-input"
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="toLocation" class="required">To Location</label>
+          <div class="input-with-icon">
+            <span class="input-icon">🏁</span>
+            <input
+              type="text"
+              id="toLocation"
+              [(ngModel)]="tour.toLocation"
+              name="toLocation"
+              required
+              placeholder="Destination"
+              class="form-input"
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="routeInformation">Route Information</label>
+        <textarea
+          id="routeInformation"
+          [(ngModel)]="tour.routeInformation"
+          name="routeInformation"
+          rows="3"
+          placeholder="Describe the route, waypoints, stops..."
+          class="form-textarea"
+        ></textarea>
+      </div>
     </div>
 
-    <!-- Image Path -->
-    <div class="form-group">
-      <label for="imagePath">Image URL</label>
-      <input type="url" id="imagePath" [(ngModel)]="tour.imagePath" name="imagePath" placeholder="https://example.com/image.jpg">
+    <!-- Section: Tour Details -->
+    <div class="form-section">
+      <h3 class="section-title">
+        <span class="section-icon">ℹ️</span>
+        Tour Details
+      </h3>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="transportType">Transport Type</label>
+          <div class="input-with-icon">
+            <span class="input-icon">🚶</span>
+            <select
+              id="transportType"
+              [(ngModel)]="tour.transportType"
+              name="transportType"
+              class="form-select"
+            >
+              <option value="HIKE">🥾 Hike</option>
+              <option value="BIKE">🚴 Bike</option>
+              <option value="RUNNING">🏃 Running</option>
+              <option value="VACATION">🏖️ Vacation</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="imagePath">Image URL</label>
+          <div class="input-with-icon">
+            <span class="input-icon">🖼️</span>
+            <input
+              type="url"
+              id="imagePath"
+              [(ngModel)]="tour.imagePath"
+              name="imagePath"
+              placeholder="https://example.com/image.jpg"
+              class="form-input"
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="distance">Distance (km)</label>
+          <div class="input-with-icon">
+            <span class="input-icon">📏</span>
+            <input
+              type="number"
+              id="distance"
+              [(ngModel)]="tour.distance"
+              name="distance"
+              min="0"
+              step="0.1"
+              placeholder="0.0"
+              class="form-input"
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="estimatedTime">Estimated Time (minutes)</label>
+          <div class="input-with-icon">
+            <span class="input-icon">⏱️</span>
+            <input
+              type="number"
+              id="estimatedTime"
+              [(ngModel)]="tour.estimatedTime"
+              name="estimatedTime"
+              min="0"
+              placeholder="e.g., 120"
+              class="form-input"
+            >
+          </div>
+          <span class="input-hint">Total estimated duration</span>
+        </div>
+      </div>
     </div>
 
-    <!-- Child Friendly -->
-    <div class="form-group checkbox-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="tour.childFriendly" name="childFriendly">
-        Child Friendly
-      </label>
+    <!-- Section: Additional Options -->
+    <div class="form-section">
+      <h3 class="section-title">
+        <span class="section-icon">⚙️</span>
+        Additional Options
+      </h3>
+
+      <div class="checkbox-group">
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            [(ngModel)]="tour.childFriendly"
+            name="childFriendly"
+            class="custom-checkbox"
+          >
+          <span class="checkbox-custom"></span>
+          <span class="checkbox-text">
+            <span class="checkbox-icon">👨‍👩‍👧‍👦</span>
+            Child Friendly - This tour is suitable for children
+          </span>
+        </label>
+      </div>
     </div>
 
-    <!-- Buttons -->
+    <!-- Action Buttons -->
     <div class="form-actions">
-      <button type="button" (click)="onCancel()" class="btn-secondary">Cancel</button>
+      <button type="button" (click)="onCancel()" class="btn-secondary">
+        <span class="btn-icon">←</span>
+        Cancel
+      </button>
       <button type="submit" [disabled]="saving" class="btn-primary">
+        <span class="btn-icon">{{ isEditMode ? '✏️' : '➕' }}</span>
         {{ saving ? 'Saving...' : (isEditMode ? 'Update Tour' : 'Create Tour') }}
       </button>
     </div>
