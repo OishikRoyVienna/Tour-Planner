@@ -47,6 +47,18 @@ input:focus {
   border-color: #667eea;
 }
 
+input.ng-invalid.ng-touched {
+  border-color: #c00;
+}
+
+.validation-error {
+  display: block;
+  margin-top: 0.35rem;
+  color: #c00;
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
 button {
   width: 100%;
   padding: 0.75rem;

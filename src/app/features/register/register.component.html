@@ -2,7 +2,7 @@
   <div class="register-card">
     <h2>Register</h2>
 
-    <form (ngSubmit)="onSubmit()">
+    <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" novalidate>
       <div class="form-group">
         <label for="firstName">First name</label>
         <input
@@ -10,9 +10,13 @@
           id="firstName"
           [(ngModel)]="firstName"
           name="firstName"
+          #firstNameModel="ngModel"
           required
           [disabled]="isLoading"
         />
+        <small class="validation-error" *ngIf="(firstNameModel.touched || submitted) && firstNameModel.invalid">
+          <span *ngIf="firstNameModel.errors?.['required']">Vorname ist erforderlich.</span>
+        </small>
       </div>
       <div class="form-group">
         <label for="lastName">Last name</label>
@@ -21,9 +25,13 @@
           id="lastName"
           [(ngModel)]="lastName"
           name="lastName"
+          #lastNameModel="ngModel"
           required
           [disabled]="isLoading"
         />
+        <small class="validation-error" *ngIf="(lastNameModel.touched || submitted) && lastNameModel.invalid">
+          <span *ngIf="lastNameModel.errors?.['required']">Nachname ist erforderlich.</span>
+        </small>
       </div>
       <div class="form-group">
         <label for="birthday">Birthday</label>
@@ -32,9 +40,13 @@
           id="birthday"
           [(ngModel)]="birthday"
           name="birthday"
+          #birthdayModel="ngModel"
           required
           [disabled]="isLoading"
         />
+        <small class="validation-error" *ngIf="(birthdayModel.touched || submitted) && birthdayModel.invalid">
+          <span *ngIf="birthdayModel.errors?.['required']">Geburtsdatum ist erforderlich.</span>
+        </small>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
@@ -43,9 +55,15 @@
           id="email"
           [(ngModel)]="email"
           name="email"
+          #emailModel="ngModel"
           required
+          email
           [disabled]="isLoading"
         />
+        <small class="validation-error" *ngIf="(emailModel.touched || submitted) && emailModel.invalid">
+          <span *ngIf="emailModel.errors?.['required']">E-Mail ist erforderlich.</span>
+          <span *ngIf="emailModel.errors?.['email']">Bitte gib eine gueltige E-Mail-Adresse ein.</span>
+        </small>
       </div>
       <div class="form-group">
         <label for="username">Username</label>
@@ -54,9 +72,13 @@
           id="username"
           [(ngModel)]="username"
           name="username"
+          #usernameModel="ngModel"
           required
           [disabled]="isLoading"
         />
+        <small class="validation-error" *ngIf="(usernameModel.touched || submitted) && usernameModel.invalid">
+          <span *ngIf="usernameModel.errors?.['required']">Benutzername ist erforderlich.</span>
+        </small>
       </div>
       <div class="form-group">
         <label for="password">Password</label>
@@ -65,12 +87,18 @@
           id="password"
           [(ngModel)]="password"
           name="password"
+          #passwordModel="ngModel"
           required
+          minlength="9"
           [disabled]="isLoading"
         />
+        <small class="validation-error" *ngIf="(passwordModel.touched || submitted) && passwordModel.invalid">
+          <span *ngIf="passwordModel.errors?.['required']">Passwort ist erforderlich.</span>
+          <span *ngIf="passwordModel.errors?.['minlength']">Passwort muss laenger als 8 Zeichen sein.</span>
+        </small>
       </div>
 
-      <button type="submit" [disabled]="isLoading">
+      <button type="submit" [disabled]="isLoading || registerForm.invalid">
         {{ isLoading ? 'Loading...' : 'Register' }}
       </button>
 

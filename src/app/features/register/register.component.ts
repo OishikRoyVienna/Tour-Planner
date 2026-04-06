@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { InMemoryAuthService } from '../../core/in-memory-auth.service';
@@ -24,12 +24,22 @@ export class RegisterComponent {
   message = '';
   isError = false;
   isLoading = false;
+  submitted = false;
 
   constructor(private router: Router) {}
 
-  onSubmit(): void {
-    this.isLoading = true;
+  onSubmit(form: NgForm): void {
+    this.submitted = true;
     this.message = '';
+    this.isError = false;
+
+    if (form.invalid) {
+      this.message = 'Bitte korrigiere die markierten Felder.';
+      this.isError = true;
+      return;
+    }
+
+    this.isLoading = true;
     this.cdr.detectChanges();
 
     queueMicrotask(() => {
