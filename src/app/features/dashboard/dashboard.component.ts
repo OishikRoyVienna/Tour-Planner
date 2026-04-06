@@ -3,15 +3,13 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';  // ← NEU!
 
-// ← WICHTIG: Named Import, nicht default!
-import { TourListComponent } from '../components/tour-list/tour-list.component';
 import { TourService } from '../services/tour.service';  // ← NEU! Import hinzufügen!
 import { Tour } from '../models/tour.model';  // ← NEU!
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, TourListComponent],
+  imports: [CommonModule],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
 })
@@ -22,6 +20,7 @@ export class DashboardComponent implements OnInit {
   username: string = 'User';
   activeToursCount = 0;
   upcomingToursCount = 0;
+  tours: Tour[] = [];
 
   readonly quickLinks = [
     { icon: '➕', title: 'Neue Tour', desc: 'Plan anlegen', accent: 'violet', route: '/tours/new' }
@@ -48,6 +47,7 @@ export class DashboardComponent implements OnInit {
     this.tourService.getTours(this.currentUserId).subscribe({
       // ← Explizite Typen für Callbacks!
       next: (tours: Tour[]) => {
+        this.tours = tours;
         this.activeToursCount = tours.length;
         this.upcomingToursCount = 0;
       },
@@ -59,6 +59,10 @@ export class DashboardComponent implements OnInit {
 
   createNewTour(): void {
     this.router.navigate(['/tours/new']);
+  }
+
+  viewTour(id: number): void {
+    this.router.navigate(['/tours', id]);
   }
 
   logout(): void {

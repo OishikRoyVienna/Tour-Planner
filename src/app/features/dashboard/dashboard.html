@@ -33,11 +33,11 @@
       </div>
       <div class="page-head-stats" role="group" aria-label="Kurzübersicht">
         <div class="stat-card">
-          <span class="stat-value">0</span>
+          <span class="stat-value">{{ activeToursCount }}</span>
           <span class="stat-label">Aktive Touren</span>
         </div>
         <div class="stat-card">
-          <span class="stat-value">0</span>
+          <span class="stat-value">{{ upcomingToursCount }}</span>
           <span class="stat-label">Demnächst</span>
         </div>
       </div>
@@ -63,7 +63,7 @@
 
     <section class="empty-section" aria-labelledby="empty-heading">
       <h2 id="empty-heading" class="visually-hidden">Tourliste</h2>
-      <div class="empty-card">
+      <div class="empty-card" *ngIf="tours.length === 0">
         <div class="empty-visual" aria-hidden="true">
           <span class="empty-orbit"></span>
           <span class="empty-pin">📍</span>
@@ -73,6 +73,19 @@
           Hier erscheint deine Tourliste, sobald die Verwaltung (CRUD) angebunden ist.
         </p>
         <p class="empty-hint">Nächster Schritt: Touren anlegen, bearbeiten und löschen</p>
+      </div>
+
+      <div class="tour-list-card" *ngIf="tours.length > 0">
+        <h3 class="tour-list-title">Deine Touren</h3>
+        <ul class="tour-items">
+          <li class="tour-item" *ngFor="let tour of tours">
+            <div class="tour-copy">
+              <strong>{{ tour.name }}</strong>
+              <span>{{ tour.fromLocation }} → {{ tour.toLocation }}</span>
+            </div>
+            <button type="button" class="tour-open-btn" (click)="viewTour(tour.id!)">Details</button>
+          </li>
+        </ul>
       </div>
     </section>
   </main>

@@ -85,9 +85,9 @@ export class TourFormComponent implements OnInit {
     } else {
       // Create new tour
       this.tourService.createTour(this.tour as Omit<Tour, 'id'>).subscribe({
-        next: (newTour) => {
+        next: () => {
           this.saving = false;
-          this.router.navigate(['/tours', newTour.id]);
+          this.router.navigate(['/dashboard']);
         },
         error: (err) => {
           this.error = err.message;
