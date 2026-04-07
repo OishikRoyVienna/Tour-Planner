@@ -5,11 +5,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Tour } from '../../models/tour.model';
 import { TourService } from '../../services/tour.service';
 import { TourLogListComponent } from '../tour-log-list/tour-log-list.component';
+import { TranslatePipe } from '../../../core/translate.pipe';
+import { LanguageToggleComponent } from '../../../core/language-toggle.component';
+import { I18nService } from '../../../core/i18n.service';
 
 @Component({
   selector: 'app-tour-detail',
   standalone: true,
-  imports: [CommonModule, TourLogListComponent],
+  imports: [CommonModule, TourLogListComponent, TranslatePipe, LanguageToggleComponent],
   templateUrl: './tour-detail.component.html',
   styleUrl: './tour-detail.component.css'
 })
@@ -17,6 +20,7 @@ export class TourDetailComponent implements OnInit {
   private tourService: TourService = inject(TourService);
   private route = inject(ActivatedRoute);
   protected router = inject(Router);
+  private readonly i18n = inject(I18nService);
 
   tour: Tour | null = null;
   loading = false;
@@ -50,7 +54,7 @@ export class TourDetailComponent implements OnInit {
   deleteTour(): void {
     if (!this.tour?.id) return;
 
-    if (confirm('Are you sure you want to delete this tour?')) {
+    if (confirm(this.i18n.t('tourDetail.confirmDelete'))) {
       this.tourService.deleteTour(this.tour.id).subscribe({
         next: () => {
           this.router.navigate(['/dashboard']);

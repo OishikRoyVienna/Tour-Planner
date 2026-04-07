@@ -5,18 +5,23 @@
         <span class="brand-mark" aria-hidden="true">🗺️</span>
         <div class="brand-text">
           <span class="brand-name">TourPlanner</span>
-          <span class="brand-tagline">Deine Touren im Blick</span>
+          <span class="brand-tagline">{{ 'dashboard.tagline' | translate }}</span>
         </div>
       </div>
-      <div class="user-menu">
-        <div class="user-pill">
-          <span class="avatar" [attr.aria-label]="'Benutzer ' + username">{{ userInitial }}</span>
-          <div class="user-meta">
-            <span class="welcome-label">Willkommen</span>
-            <span class="welcome-name">{{ username }}</span>
+      <div class="navbar-actions">
+        <app-language-toggle class="in-navbar" />
+        <div class="user-menu">
+          <div class="user-pill">
+            <span class="avatar" [attr.aria-label]="('dashboard.welcome' | translate) + ' ' + username">{{
+              userInitial
+            }}</span>
+            <div class="user-meta">
+              <span class="welcome-label">{{ 'dashboard.welcome' | translate }}</span>
+              <span class="welcome-name">{{ username }}</span>
+            </div>
           </div>
+          <button type="button" (click)="logout()" class="logout-btn">{{ 'dashboard.logout' | translate }}</button>
         </div>
-        <button type="button" (click)="logout()" class="logout-btn">Abmelden</button>
       </div>
     </div>
   </header>
@@ -24,59 +29,58 @@
   <main class="content">
     <section class="page-head">
       <div class="page-head-copy">
-        <p class="eyebrow">Übersicht</p>
-        <h1>Meine Touren</h1>
+        <p class="eyebrow">{{ 'dashboard.eyebrow' | translate }}</p>
+        <h1>{{ 'dashboard.title' | translate }}</h1>
         <p class="subtitle">
-          Plane Rad-, Wander-, Lauf- und Urlaubstouren an einem Ort — bald mit Listen, Karte und
-          Details.
+          {{ 'dashboard.subtitle' | translate }}
         </p>
       </div>
-      <div class="page-head-stats" role="group" aria-label="Kurzübersicht">
+      <div class="page-head-stats" role="group" [attr.aria-label]="'dashboard.statsAria' | translate">
         <div class="stat-card">
           <span class="stat-value">{{ activeToursCount }}</span>
-          <span class="stat-label">Aktive Touren</span>
+          <span class="stat-label">{{ 'dashboard.activeTours' | translate }}</span>
         </div>
         <div class="stat-card">
           <span class="stat-value">{{ upcomingToursCount }}</span>
-          <span class="stat-label">Demnächst</span>
+          <span class="stat-label">{{ 'dashboard.upcoming' | translate }}</span>
         </div>
       </div>
     </section>
 
     <section class="quick-section" aria-labelledby="quick-heading">
-      <h2 id="quick-heading" class="section-title">Neue Tour</h2>
+      <h2 id="quick-heading" class="section-title">{{ 'dashboard.newTourSection' | translate }}</h2>
       <div class="quick-grid quick-grid--single">
-        @for (link of quickLinks; track link.title) {
+        @for (link of quickLinks; track link.titleKey) {
           <button
             type="button"
             class="quick-card quick-card--{{ link.accent }}"
             (click)="createNewTour()"
-            [attr.aria-label]="link.title"
+            [attr.aria-label]="link.titleKey | translate"
           >
             <span class="quick-icon" aria-hidden="true">{{ link.icon }}</span>
-            <span class="quick-title">{{ link.title }}</span>
-            <span class="quick-desc">{{ link.desc }}</span>
+            <span class="quick-title">{{ link.titleKey | translate }}</span>
+            <span class="quick-desc">{{ link.descKey | translate }}</span>
           </button>
         }
       </div>
     </section>
 
     <section class="empty-section" aria-labelledby="empty-heading">
-      <h2 id="empty-heading" class="visually-hidden">Tourliste</h2>
+      <h2 id="empty-heading" class="visually-hidden">{{ 'dashboard.tourListHidden' | translate }}</h2>
       <div class="empty-card" *ngIf="tours.length === 0">
         <div class="empty-visual" aria-hidden="true">
           <span class="empty-orbit"></span>
           <span class="empty-pin">📍</span>
         </div>
-        <h3 class="empty-title">Noch keine Touren</h3>
+        <h3 class="empty-title">{{ 'dashboard.emptyTitle' | translate }}</h3>
         <p class="empty-text">
-          Hier erscheint deine Tourliste, sobald die Verwaltung (CRUD) angebunden ist.
+          {{ 'dashboard.emptyText' | translate }}
         </p>
-        <p class="empty-hint">Nächster Schritt: Touren anlegen, bearbeiten und löschen</p>
+        <p class="empty-hint">{{ 'dashboard.emptyHint' | translate }}</p>
       </div>
 
       <div class="tour-list-card" *ngIf="tours.length > 0">
-        <h3 class="tour-list-title">Deine Touren</h3>
+        <h3 class="tour-list-title">{{ 'dashboard.yourTours' | translate }}</h3>
         <ul class="tour-items">
           <li class="tour-item" *ngFor="let tour of tours">
             <div class="tour-copy">
@@ -84,8 +88,12 @@
               <span>{{ tour.fromLocation }} → {{ tour.toLocation }}</span>
             </div>
             <div class="tour-actions">
-              <button type="button" class="tour-open-btn" (click)="viewTour(tour.id!)">Details</button>
-              <button type="button" class="tour-delete-btn" (click)="deleteTour(tour.id!)">Loeschen</button>
+              <button type="button" class="tour-open-btn" (click)="viewTour(tour.id!)">
+                {{ 'dashboard.details' | translate }}
+              </button>
+              <button type="button" class="tour-delete-btn" (click)="deleteTour(tour.id!)">
+                {{ 'dashboard.delete' | translate }}
+              </button>
             </div>
           </li>
         </ul>

@@ -1,21 +1,24 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http'
+import { HttpErrorResponse } from '@angular/common/http';
 
 import { TourService } from '../services/tour.service';
 import { Tour } from '../models/tour.model';
+import { TranslatePipe } from '../../core/translate.pipe';
+import { I18nService } from '../../core/i18n.service';
+import { LanguageToggleComponent } from '../../core/language-toggle.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe, LanguageToggleComponent],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
 })
 export class DashboardComponent implements OnInit {
-  // ← Typ explizit angeben!
   private tourService: TourService = inject(TourService);
+  private readonly i18n = inject(I18nService);
 
   username: string = 'User';
   activeToursCount = 0;
@@ -23,7 +26,7 @@ export class DashboardComponent implements OnInit {
   tours: Tour[] = [];
 
   readonly quickLinks = [
-    { icon: '➕', title: 'Neue Tour', desc: 'Plan anlegen', accent: 'violet', route: '/tours/new' }
+    { icon: '➕', titleKey: 'dashboard.quickTitle', descKey: 'dashboard.quickDesc', accent: 'violet' }
   ] as const;
 
   currentUserId = 1;
@@ -45,7 +48,6 @@ export class DashboardComponent implements OnInit {
 
   loadStats(): void {
     this.tourService.getTours(this.currentUserId).subscribe({
-      // ← Explizite Typen für Callbacks!
       next: (tours: Tour[]) => {
         this.tours = tours;
         this.activeToursCount = tours.length;
@@ -66,7 +68,7 @@ export class DashboardComponent implements OnInit {
   }
 
   deleteTour(id: number): void {
-    if (!confirm('Moechtest du diese Tour wirklich loeschen?')) {
+    if (!confirm(this.i18n.t('dashboard.confirmDelete'))) {
       return;
     }
 

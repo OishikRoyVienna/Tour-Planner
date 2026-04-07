@@ -3,17 +3,20 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { InMemoryTourLogService } from '../../../core/in-memory-tour-log.service';
 import { TourLog } from '../../models/tour-log.model';
+import { TranslatePipe } from '../../../core/translate.pipe';
+import { I18nService } from '../../../core/i18n.service';
 
 @Component({
   selector: 'app-tour-log-list',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, TranslatePipe],
   templateUrl: './tour-log-list.component.html',
   styleUrl: './tour-log-list.component.css'
 })
 export class TourLogListComponent implements OnInit {
   private tourLogService = inject(InMemoryTourLogService);
   private router = inject(Router);
+  private readonly i18n = inject(I18nService);
 
   @Input() tourId!: number;
 
@@ -52,7 +55,7 @@ export class TourLogListComponent implements OnInit {
   }
 
   deleteLog(id: number): void {
-    if (confirm('Are you sure you want to delete this log?')) {
+    if (confirm(this.i18n.t('tourLogList.confirmDelete'))) {
       this.tourLogService.deleteLog(id).subscribe({
         next: () => {
           this.tourLogs = this.tourLogs.filter(log => log.id !== id);
@@ -65,13 +68,11 @@ export class TourLogListComponent implements OnInit {
   }
 
   getDifficultyLabel(difficulty: 'EASY' | 'MEDIUM' | 'HARD' | undefined): string {
-    if (!difficulty) return 'Unknown';
-    const labels: { [key: string]: string } = {
-      'EASY': 'Easy 🟢',
-      'MEDIUM': 'Medium 🟡',
-      'HARD': 'Hard 🔴'
-    };
-    return labels[difficulty] || difficulty;
+    this.i18n.lang();
+    if (!difficulty) {
+      return this.i18n.t('common.unknown');
+    }
+    return this.i18n.t(`tourLogList.difficulty.${difficulty}`);
   }
 
   getDifficultyColor(difficulty: 'EASY' | 'MEDIUM' | 'HARD' | undefined): string {

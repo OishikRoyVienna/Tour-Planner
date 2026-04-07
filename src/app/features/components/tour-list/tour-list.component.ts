@@ -3,17 +3,21 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { TourService } from '../../services/tour.service';
 import { Tour } from '../../models/tour.model';
+import { TranslatePipe } from '../../../core/translate.pipe';
+import { LanguageToggleComponent } from '../../../core/language-toggle.component';
+import { I18nService } from '../../../core/i18n.service';
 
 @Component({
   selector: 'app-tour-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe, LanguageToggleComponent],
   templateUrl: './tour-list.component.html',
   styleUrl: './tour-list.component.css'
 })
 export class TourListComponent implements OnInit {
   private tourService: TourService = inject(TourService);
   private router = inject(Router);
+  private readonly i18n = inject(I18nService);
 
   tours: Tour[] = [];
   loading = false;
@@ -53,7 +57,7 @@ export class TourListComponent implements OnInit {
   }
 
   deleteTour(id: number): void {
-    if (confirm('Are you sure you want to delete this tour?')) {
+    if (confirm(this.i18n.t('tourList.confirmDelete'))) {
       this.tourService.deleteTour(id).subscribe({
         next: () => {
           this.tours = this.tours.filter(t => t.id !== id);

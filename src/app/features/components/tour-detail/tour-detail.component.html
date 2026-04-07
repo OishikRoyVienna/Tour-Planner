@@ -1,42 +1,59 @@
 <div class="tour-detail-container">
-  <div *ngIf="loading" class="loading">Loading...</div>
+  <div class="detail-lang-row">
+    <app-language-toggle class="auth-toolbar" />
+  </div>
+
+  <div *ngIf="loading" class="loading">{{ 'tourDetail.loading' | translate }}</div>
   <div *ngIf="error" class="error">❌ {{ error }}</div>
 
   <div *ngIf="tour && !loading" class="tour-detail">
     <div class="tour-header">
       <h1>{{ tour.name }}</h1>
       <div class="tour-actions">
-        <button (click)="editTour()" class="btn-edit">✏️ Edit</button>
-        <button (click)="deleteTour()" class="btn-delete">🗑️ Delete</button>
-        <button (click)="router.navigate(['/dashboard'])" class="btn-back">← Back</button>
+        <button type="button" (click)="editTour()" class="btn-edit">✏️ {{ 'tourDetail.edit' | translate }}</button>
+        <button type="button" (click)="deleteTour()" class="btn-delete">🗑️ {{ 'tourDetail.delete' | translate }}</button>
+        <button type="button" (click)="router.navigate(['/dashboard'])" class="btn-back">{{ 'tourDetail.back' | translate }}</button>
       </div>
     </div>
 
     <div *ngIf="tour.imagePath" class="tour-image">
-      <img [src]="tour.imagePath" [alt]="tour.name">
+      <img [src]="tour.imagePath" [alt]="tour.name" />
     </div>
 
     <div class="tour-section">
-      <h3>Basic Information</h3>
+      <h3>{{ 'tourDetail.sectionBasic' | translate }}</h3>
       <div class="info-grid">
-        <div class="info-item"><strong>From:</strong> {{ tour.fromLocation }}</div>
-        <div class="info-item"><strong>To:</strong> {{ tour.toLocation }}</div>
-        <div class="info-item"><strong>Type:</strong> {{ getTransportIcon(tour.transportType) }} {{ tour.transportType }}</div>
-        <div class="info-item" *ngIf="tour.distance"><strong>Distance:</strong> {{ tour.distance }} km</div>
-        <div class="info-item" *ngIf="tour.estimatedTime"><strong>Time:</strong> {{ tour.estimatedTime }} min</div>
-        <div class="info-item"><strong>Child Friendly:</strong> {{ tour.childFriendly ? 'Yes ✅' : 'No ❌' }}</div>
+        <div class="info-item">
+          <strong>{{ 'tourDetail.from' | translate }}:</strong> {{ tour.fromLocation }}
+        </div>
+        <div class="info-item">
+          <strong>{{ 'tourDetail.to' | translate }}:</strong> {{ tour.toLocation }}
+        </div>
+        <div class="info-item">
+          <strong>{{ 'tourDetail.type' | translate }}:</strong> {{ getTransportIcon(tour.transportType) }} {{ tour.transportType }}
+        </div>
+        <div class="info-item" *ngIf="tour.distance">
+          <strong>{{ 'tourDetail.distance' | translate }}:</strong> {{ tour.distance }} km
+        </div>
+        <div class="info-item" *ngIf="tour.estimatedTime">
+          <strong>{{ 'tourDetail.time' | translate }}:</strong> {{ tour.estimatedTime }} min
+        </div>
+        <div class="info-item">
+          <strong>{{ 'tourDetail.childFriendly' | translate }}:</strong>
+          {{ tour.childFriendly ? ('common.yes' | translate) : ('common.no' | translate) }}
+        </div>
       </div>
     </div>
 
     <div *ngIf="tour.description" class="tour-section">
-      <h3>Description</h3>
+      <h3>{{ 'tourDetail.description' | translate }}</h3>
       <p>{{ tour.description }}</p>
     </div>
 
     <div class="tour-section">
-      <h3>Map</h3>
+      <h3>{{ 'tourDetail.map' | translate }}</h3>
       <div class="map-placeholder">
-        <p>🗺️ Map will be displayed here</p>
+        <p>🗺️ {{ 'tourDetail.mapPlaceholder' | translate }}</p>
       </div>
     </div>
 

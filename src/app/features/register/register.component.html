@@ -1,10 +1,14 @@
 <div class="register-container">
-  <div class="register-card">
-    <h2>Register</h2>
+  <div class="auth-stack">
+    <div class="auth-lang-row">
+      <app-language-toggle class="auth-toolbar" />
+    </div>
+    <div class="register-card">
+    <h2>{{ 'register.title' | translate }}</h2>
 
     <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" novalidate>
       <div class="form-group">
-        <label for="firstName">First name</label>
+        <label for="firstName">{{ 'register.firstName' | translate }}</label>
         <input
           type="text"
           id="firstName"
@@ -15,11 +19,11 @@
           [disabled]="isLoading"
         />
         <small class="validation-error" *ngIf="(firstNameModel.touched || submitted) && firstNameModel.invalid">
-          <span *ngIf="firstNameModel.errors?.['required']">Vorname ist erforderlich.</span>
+          <span *ngIf="firstNameModel.errors?.['required']">{{ 'register.err.first' | translate }}</span>
         </small>
       </div>
       <div class="form-group">
-        <label for="lastName">Last name</label>
+        <label for="lastName">{{ 'register.lastName' | translate }}</label>
         <input
           type="text"
           id="lastName"
@@ -30,11 +34,11 @@
           [disabled]="isLoading"
         />
         <small class="validation-error" *ngIf="(lastNameModel.touched || submitted) && lastNameModel.invalid">
-          <span *ngIf="lastNameModel.errors?.['required']">Nachname ist erforderlich.</span>
+          <span *ngIf="lastNameModel.errors?.['required']">{{ 'register.err.last' | translate }}</span>
         </small>
       </div>
       <div class="form-group">
-        <label for="birthday">Birthday</label>
+        <label for="birthday">{{ 'register.birthday' | translate }}</label>
         <input
           type="date"
           id="birthday"
@@ -45,11 +49,11 @@
           [disabled]="isLoading"
         />
         <small class="validation-error" *ngIf="(birthdayModel.touched || submitted) && birthdayModel.invalid">
-          <span *ngIf="birthdayModel.errors?.['required']">Geburtsdatum ist erforderlich.</span>
+          <span *ngIf="birthdayModel.errors?.['required']">{{ 'register.err.birth' | translate }}</span>
         </small>
       </div>
       <div class="form-group">
-        <label for="email">Email</label>
+        <label for="email">{{ 'register.email' | translate }}</label>
         <input
           type="email"
           id="email"
@@ -61,12 +65,12 @@
           [disabled]="isLoading"
         />
         <small class="validation-error" *ngIf="(emailModel.touched || submitted) && emailModel.invalid">
-          <span *ngIf="emailModel.errors?.['required']">E-Mail ist erforderlich.</span>
-          <span *ngIf="emailModel.errors?.['email']">Bitte gib eine gueltige E-Mail-Adresse ein.</span>
+          <span *ngIf="emailModel.errors?.['required']">{{ 'register.err.emailReq' | translate }}</span>
+          <span *ngIf="emailModel.errors?.['email']">{{ 'register.err.emailFmt' | translate }}</span>
         </small>
       </div>
       <div class="form-group">
-        <label for="username">Username</label>
+        <label for="username">{{ 'register.username' | translate }}</label>
         <input
           type="text"
           id="username"
@@ -77,11 +81,11 @@
           [disabled]="isLoading"
         />
         <small class="validation-error" *ngIf="(usernameModel.touched || submitted) && usernameModel.invalid">
-          <span *ngIf="usernameModel.errors?.['required']">Benutzername ist erforderlich.</span>
+          <span *ngIf="usernameModel.errors?.['required']">{{ 'register.err.user' | translate }}</span>
         </small>
       </div>
       <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password">{{ 'register.password' | translate }}</label>
         <input
           type="password"
           id="password"
@@ -93,23 +97,24 @@
           [disabled]="isLoading"
         />
         <small class="validation-error" *ngIf="(passwordModel.touched || submitted) && passwordModel.invalid">
-          <span *ngIf="passwordModel.errors?.['required']">Passwort ist erforderlich.</span>
-          <span *ngIf="passwordModel.errors?.['minlength']">Passwort muss laenger als 8 Zeichen sein.</span>
+          <span *ngIf="passwordModel.errors?.['required']">{{ 'register.err.passReq' | translate }}</span>
+          <span *ngIf="passwordModel.errors?.['minlength']">{{ 'register.err.passLen' | translate }}</span>
         </small>
       </div>
 
       <button type="submit" [disabled]="isLoading || registerForm.invalid">
-        {{ isLoading ? 'Loading...' : 'Register' }}
+        {{ isLoading ? ('register.loading' | translate) : ('register.submit' | translate) }}
       </button>
 
       <p class="footer-link">
-        Already have an account?
-        <a routerLink="/login">Login</a>
+        {{ 'register.haveAccount' | translate }}
+        <a routerLink="/login">{{ 'register.loginLink' | translate }}</a>
       </p>
 
       <div *ngIf="message" [class.error]="isError" [class.success]="!isError">
         {{ message }}
       </div>
     </form>
+    </div>
   </div>
 </div>

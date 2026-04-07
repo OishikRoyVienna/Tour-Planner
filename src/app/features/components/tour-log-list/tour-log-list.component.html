@@ -1,50 +1,50 @@
 <div class="tour-log-list">
   <div class="log-header">
-    <h3>Tour Logs</h3>
+    <h3>{{ 'tourLogList.title' | translate }}</h3>
     <a [routerLink]="['/tours', tourId, 'logs', 'new']" class="btn-new-log">
-      + Add Log
+      {{ 'tourLogList.add' | translate }}
     </a>
   </div>
 
-  <div *ngIf="loading" class="loading">⏳ Loading logs...</div>
+  <div *ngIf="loading" class="loading">⏳ {{ 'tourLogList.loading' | translate }}</div>
   <div *ngIf="error" class="error">❌ {{ error }}</div>
 
   <div *ngIf="!loading && !error && tourLogs.length > 0" class="logs-container">
     <div *ngFor="let log of tourLogs" class="log-card">
       <div class="log-header-info">
-        <h4>📅 {{ log.dateTime | date:'dd.MM.yyyy HH:mm' }}</h4>
+        <h4>📅 {{ log.dateTime | date: 'dd.MM.yyyy HH:mm' }}</h4>
         <div class="log-actions">
-          <button (click)="editLog(log.id!)" class="btn-edit">✏️</button>
-          <button (click)="deleteLog(log.id!)" class="btn-delete">🗑️</button>
+          <button type="button" (click)="editLog(log.id!)" class="btn-edit">✏️</button>
+          <button type="button" (click)="deleteLog(log.id!)" class="btn-delete">🗑️</button>
         </div>
       </div>
 
       <div class="log-details">
         <div class="log-detail-item" *ngIf="log.comment">
-          <strong>💬 Comment:</strong>
+          <strong>💬 {{ 'tourLogList.comment' | translate }}:</strong>
           <p>{{ log.comment }}</p>
         </div>
 
         <div class="log-stats">
           <div class="stat">
-            <span class="stat-label">Difficulty:</span>
+            <span class="stat-label">{{ 'tourLogList.difficulty' | translate }}:</span>
             <span class="stat-value" [style.color]="getDifficultyColor(log.difficulty)">
               {{ getDifficultyLabel(log.difficulty) }}
             </span>
           </div>
 
           <div class="stat" *ngIf="log.totalDistance">
-            <span class="stat-label">Distance:</span>
+            <span class="stat-label">{{ 'tourLogList.distance' | translate }}:</span>
             <span class="stat-value">{{ log.totalDistance }} km</span>
           </div>
 
           <div class="stat" *ngIf="log.totalTime">
-            <span class="stat-label">Time:</span>
+            <span class="stat-label">{{ 'tourLogList.time' | translate }}:</span>
             <span class="stat-value">{{ log.totalTime }} min</span>
           </div>
 
           <div class="stat" *ngIf="log.rating">
-            <span class="stat-label">Rating:</span>
+            <span class="stat-label">{{ 'tourLogList.rating' | translate }}:</span>
             <span class="stat-value rating">
               {{ getRatingStars(log.rating) }}
             </span>
@@ -55,6 +55,6 @@
   </div>
 
   <p *ngIf="!loading && !error && tourLogs.length === 0" class="empty">
-    📝 No logs yet. Create your first log!
+    📝 {{ 'tourLogList.empty' | translate }}
   </p>
 </div>

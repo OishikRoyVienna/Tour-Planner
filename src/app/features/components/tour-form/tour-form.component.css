@@ -1,6 +1,17 @@
+.tour-form-page {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.form-lang-row {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 20px 0;
+}
+
 .tour-form-container {
   max-width: 900px;
-  margin: 2rem auto;
+  margin: 0 auto 2rem;
   padding: 0 20px;
 }
 

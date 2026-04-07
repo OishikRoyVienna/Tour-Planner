@@ -1,23 +1,25 @@
 <div class="tour-list">
-  <!-- ← NEU: Header mit Logo und Dashboard-Button -->
   <div class="page-header">
-    <div class="brand" (click)="goToDashboard()" title="Back to Dashboard">
+    <div class="brand" (click)="goToDashboard()" [attr.title]="'tourList.backTitle' | translate">
       <h1>🗺️ TourPlanner</h1>
-      <p class="tagline">Deine Touren im Blick</p>
+      <p class="tagline">{{ 'dashboard.tagline' | translate }}</p>
     </div>
-    <button (click)="goToDashboard()" class="btn-dashboard">
-      ← Back to Dashboard
-    </button>
+    <div class="page-header-actions">
+      <app-language-toggle class="auth-toolbar" />
+      <button type="button" (click)="goToDashboard()" class="btn-dashboard">
+        {{ 'tourList.back' | translate }}
+      </button>
+    </div>
   </div>
 
-  <h2>My Tours</h2>
+  <h2>{{ 'tourList.heading' | translate }}</h2>
 
   <div class="button-group">
-    <button (click)="loadTours()" class="btn-refresh">🔄 Refresh</button>
-    <button (click)="createNewTour()" class="btn-primary">+ New Tour</button>
+    <button type="button" (click)="loadTours()" class="btn-refresh">{{ 'tourList.refresh' | translate }}</button>
+    <button type="button" (click)="createNewTour()" class="btn-primary">{{ 'tourList.newTour' | translate }}</button>
   </div>
 
-  <div *ngIf="loading" class="loading">⏳ Loading tours...</div>
+  <div *ngIf="loading" class="loading">⏳ {{ 'tourList.loading' | translate }}</div>
 
   <div *ngIf="error" class="error">❌ {{ error }}</div>
 
@@ -30,14 +32,14 @@
       <p *ngIf="tour.estimatedTime"><strong>⏱️</strong> {{ tour.estimatedTime }} min</p>
 
       <div class="actions">
-        <button (click)="viewTour(tour.id!)" class="btn-view">👁️ View</button>
-        <button (click)="editTour(tour.id!)" class="btn-edit">✏️ Edit</button>
-        <button (click)="deleteTour(tour.id!)" class="btn-delete">🗑️ Delete</button>
+        <button type="button" (click)="viewTour(tour.id!)" class="btn-view">👁️ {{ 'tourList.view' | translate }}</button>
+        <button type="button" (click)="editTour(tour.id!)" class="btn-edit">✏️ {{ 'tourList.edit' | translate }}</button>
+        <button type="button" (click)="deleteTour(tour.id!)" class="btn-delete">🗑️ {{ 'tourList.delete' | translate }}</button>
       </div>
     </li>
   </ul>
 
   <p *ngIf="!loading && !error && tours.length === 0" class="empty">
-    🎒 No tours found. Create your first tour!
+    🎒 {{ 'tourList.empty' | translate }}
   </p>
 </div>

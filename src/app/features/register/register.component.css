@@ -7,6 +7,17 @@
   padding: 1rem;
 }
 
+.auth-stack {
+  width: 100%;
+  max-width: 440px;
+}
+
+.auth-lang-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.75rem;
+}
+
 .register-card {
   background: white;
   padding: 2rem;

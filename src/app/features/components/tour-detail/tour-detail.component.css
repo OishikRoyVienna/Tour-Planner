@@ -4,6 +4,12 @@
   padding: 20px;
 }
 
+.detail-lang-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.75rem;
+}
+
 .loading, .error {
   padding: 2rem;
   border-radius: 8px;

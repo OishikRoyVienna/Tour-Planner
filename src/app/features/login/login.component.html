@@ -1,49 +1,51 @@
 <div class="login-container">
-  <div class="login-card">
-    <h2>TourPlanner Login</h2>
+  <div class="auth-stack">
+    <div class="auth-lang-row">
+      <app-language-toggle class="auth-toolbar" />
+    </div>
+    <div class="login-card">
+    <h2>{{ 'login.title' | translate }}</h2>
 
     <form (ngSubmit)="onSubmit()">
-      <!-- Data Binding: [(ngModel)] -->
       <div class="form-group">
-        <label for="username">Username</label>
+        <label for="username">{{ 'login.username' | translate }}</label>
         <input
           type="text"
           id="username"
           [(ngModel)]="username"
           name="username"
           required
-          placeholder="Enter username"
+          [attr.placeholder]="'login.phUser' | translate"
           [disabled]="isLoading"
         />
       </div>
 
       <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password">{{ 'login.password' | translate }}</label>
         <input
           type="password"
           id="password"
           [(ngModel)]="password"
           name="password"
           required
-          placeholder="Enter password"
+          [attr.placeholder]="'login.phPass' | translate"
           [disabled]="isLoading"
         />
       </div>
 
       <button type="submit" [disabled]="isLoading">
-        {{ isLoading ? 'Loading...' : 'Login' }}
+        {{ isLoading ? ('login.loading' | translate) : ('login.submit' | translate) }}
       </button>
 
       <p class="register-hint">
-        Not a member yet?
-        <a routerLink="/register">Register</a>
+        {{ 'login.registerHint' | translate }}
+        <a routerLink="/register">{{ 'login.registerLink' | translate }}</a>
       </p>
 
-      <div *ngIf="message"
-           [class.error]="isError"
-           [class.success]="!isError">
+      <div *ngIf="message" [class.error]="isError" [class.success]="!isError">
         {{ message }}
       </div>
     </form>
+    </div>
   </div>
 </div>

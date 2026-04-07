@@ -1,3 +1,14 @@
+.tour-log-form-page {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-lang-row {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 20px 0;
+}
+
 .tour-log-form-container {
   max-width: 800px;
   margin: 0 auto;

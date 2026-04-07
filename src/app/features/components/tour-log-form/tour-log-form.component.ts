@@ -4,11 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InMemoryTourLogService } from '../../../core/in-memory-tour-log.service';
 import { TourLog } from '../../models/tour-log.model';
+import { TranslatePipe } from '../../../core/translate.pipe';
+import { LanguageToggleComponent } from '../../../core/language-toggle.component';
+import { I18nService } from '../../../core/i18n.service';
 
 @Component({
   selector: 'app-tour-log-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslatePipe, LanguageToggleComponent],
   templateUrl: './tour-log-form.component.html',
   styleUrl: './tour-log-form.component.css'
 })
@@ -16,6 +19,7 @@ export class TourLogFormComponent implements OnInit {
   private tourLogService = inject(InMemoryTourLogService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private readonly i18n = inject(I18nService);
 
   tourLog: Partial<TourLog> = {
     tourId: 0,
@@ -33,12 +37,7 @@ export class TourLogFormComponent implements OnInit {
   error: string | null = null;
   saving = false;
 
-  difficulties = [
-    { value: 'EASY' as const, label: 'Easy 🟢', color: '#4CAF50' },
-    { value: 'MEDIUM' as const, label: 'Medium 🟡', color: '#FFC107' },
-    { value: 'HARD' as const, label: 'Hard 🔴', color: '#F44336' }
-  ];
-
+  readonly difficultyValues = ['EASY', 'MEDIUM', 'HARD'] as const;
   ratings = [1, 2, 3, 4, 5];
 
   ngOnInit(): void {
@@ -61,13 +60,13 @@ export class TourLogFormComponent implements OnInit {
 
   loadLog(id: number): void {
     this.tourLogService.getLog(id).subscribe({
-      next: (log) => {
+      next: log => {
         this.tourLog = { ...log };
         if (this.tourLog.dateTime) {
           this.tourLog.dateTime = this.tourLog.dateTime.slice(0, 16);
         }
       },
-      error: (err) => {
+      error: err => {
         this.error = err.message;
       }
     });
@@ -75,12 +74,12 @@ export class TourLogFormComponent implements OnInit {
 
   onSubmit(): void {
     if (!this.tourLog.dateTime || !this.tourLog.comment) {
-      this.error = 'Date/Time and Comment are required!';
+      this.error = this.i18n.t('tourLogForm.errRequired');
       return;
     }
 
     if ((this.tourLog.totalDistance ?? 0) < 0 || (this.tourLog.totalTime ?? 0) < 0) {
-      this.error = 'Distance and Time must be positive!';
+      this.error = this.i18n.t('tourLogForm.errPositive');
       return;
     }
 
@@ -95,7 +94,7 @@ export class TourLogFormComponent implements OnInit {
           this.saving = false;
           this.router.navigate(['/dashboard']);
         },
-        error: (err) => {
+        error: err => {
           this.error = err.message;
           this.saving = false;
         }
@@ -106,7 +105,7 @@ export class TourLogFormComponent implements OnInit {
           this.saving = false;
           this.router.navigate(['/dashboard']);
         },
-        error: (err) => {
+        error: err => {
           this.error = err.message;
           this.saving = false;
         }
@@ -116,10 +115,5 @@ export class TourLogFormComponent implements OnInit {
 
   onCancel(): void {
     this.router.navigate(['/dashboard']);
-  }
-
-  getDifficultyColor(value: 'EASY' | 'MEDIUM' | 'HARD' | undefined): string {
-    const diff = this.difficulties.find(d => d.value === value);
-    return diff ? diff.color : '#999';
   }
 }

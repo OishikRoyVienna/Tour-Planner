@@ -4,11 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TourService } from '../../services/tour.service';
 import { Tour } from '../../models/tour.model';
+import { TranslatePipe } from '../../../core/translate.pipe';
+import { LanguageToggleComponent } from '../../../core/language-toggle.component';
+import { I18nService } from '../../../core/i18n.service';
 
 @Component({
   selector: 'app-tour-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslatePipe, LanguageToggleComponent],
   templateUrl: './tour-form.component.html',
   styleUrl: './tour-form.component.css'
 })
@@ -16,6 +19,7 @@ export class TourFormComponent implements OnInit {
   private tourService = inject(TourService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private readonly i18n = inject(I18nService);
 
   tour: Partial<Tour> = {
     name: '',
@@ -37,7 +41,12 @@ export class TourFormComponent implements OnInit {
   error: string | null = null;
   saving = false;
 
-  transportTypes = ['BIKE', 'HIKE', 'RUNNING', 'VACATION'];
+  readonly transportValues: Array<'HIKE' | 'BIKE' | 'RUNNING' | 'VACATION'> = [
+    'HIKE',
+    'BIKE',
+    'RUNNING',
+    'VACATION'
+  ];
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -63,7 +72,7 @@ export class TourFormComponent implements OnInit {
 
   onSubmit(): void {
     if (!this.tour.name || !this.tour.fromLocation || !this.tour.toLocation) {
-      this.error = 'Name, From Location, and To Location are required!';
+      this.error = this.i18n.t('tourForm.errRequired');
       return;
     }
 

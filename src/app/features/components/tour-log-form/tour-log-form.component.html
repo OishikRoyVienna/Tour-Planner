@@ -1,59 +1,91 @@
-<div class="tour-log-form-container">
-  <h2>{{ isEditMode ? 'Edit Tour Log' : 'Create Tour Log' }}</h2>
+<div class="tour-log-form-page">
+  <div class="form-lang-row">
+    <app-language-toggle class="auth-toolbar" />
+  </div>
 
-  <div *ngIf="error" class="error-message">❌ {{ error }}</div>
+  <div class="tour-log-form-container">
+    <h2>{{ (isEditMode ? 'tourLogForm.titleEdit' : 'tourLogForm.titleCreate') | translate }}</h2>
 
-  <form (ngSubmit)="onSubmit()" class="tour-log-form">
-    <div class="form-group">
-      <label for="dateTime">Date & Time *</label>
-      <input type="datetime-local" id="dateTime" [(ngModel)]="tourLog.dateTime" name="dateTime" required>
-    </div>
+    <div *ngIf="error" class="error-message">❌ {{ error }}</div>
 
-    <div class="form-group">
-      <label for="comment">Comment *</label>
-      <textarea id="comment" [(ngModel)]="tourLog.comment" name="comment" rows="4" required
-                placeholder="How was the tour?"></textarea>
-    </div>
-
-    <div class="form-group">
-      <label for="difficulty">Difficulty *</label>
-      <select id="difficulty" [(ngModel)]="tourLog.difficulty" name="difficulty" required>
-        <option *ngFor="let diff of difficulties" [value]="diff.value">
-          {{ diff.label }}
-        </option>
-      </select>
-    </div>
-
-    <div class="form-row">
+    <form (ngSubmit)="onSubmit()" class="tour-log-form">
       <div class="form-group">
-        <label for="totalDistance">Distance (km)</label>
-        <input type="number" id="totalDistance" [(ngModel)]="tourLog.totalDistance" name="totalDistance"
-               min="0" step="0.1" placeholder="0.0">
+        <label for="dateTime">{{ 'tourLogForm.dateTime' | translate }}</label>
+        <input type="datetime-local" id="dateTime" [(ngModel)]="tourLog.dateTime" name="dateTime" required />
       </div>
+
       <div class="form-group">
-        <label for="totalTime">Time (minutes)</label>
-        <input type="number" id="totalTime" [(ngModel)]="tourLog.totalTime" name="totalTime"
-               min="0" placeholder="0">
+        <label for="comment">{{ 'tourLogForm.comment' | translate }}</label>
+        <textarea
+          id="comment"
+          [(ngModel)]="tourLog.comment"
+          name="comment"
+          rows="4"
+          required
+          [attr.placeholder]="'tourLogForm.commentPh' | translate"
+        ></textarea>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label>Rating</label>
-      <div class="rating-input">
-        <span *ngFor="let star of ratings" class="star"
-              [class.filled]="star <= (tourLog.rating || 0)"
-              (click)="tourLog.rating = star">
-          {{ star <= (tourLog.rating || 0) ? '★' : '☆' }}
-        </span>
+      <div class="form-group">
+        <label for="difficulty">{{ 'tourLogForm.difficulty' | translate }}</label>
+        <select id="difficulty" [(ngModel)]="tourLog.difficulty" name="difficulty" required>
+          <option *ngFor="let d of difficultyValues" [value]="d">
+            {{ ('tourLogForm.difficultyOpt.' + d) | translate }}
+          </option>
+        </select>
       </div>
-      <input type="hidden" [(ngModel)]="tourLog.rating" name="rating">
-    </div>
 
-    <div class="form-actions">
-      <button type="button" (click)="onCancel()" class="btn-secondary">Cancel</button>
-      <button type="submit" [disabled]="saving" class="btn-primary">
-        {{ saving ? 'Saving...' : (isEditMode ? 'Update Log' : 'Create Log') }}
-      </button>
-    </div>
-  </form>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="totalDistance">{{ 'tourLogForm.distance' | translate }}</label>
+          <input
+            type="number"
+            id="totalDistance"
+            [(ngModel)]="tourLog.totalDistance"
+            name="totalDistance"
+            min="0"
+            step="0.1"
+            placeholder="0.0"
+          />
+        </div>
+        <div class="form-group">
+          <label for="totalTime">{{ 'tourLogForm.time' | translate }}</label>
+          <input
+            type="number"
+            id="totalTime"
+            [(ngModel)]="tourLog.totalTime"
+            name="totalTime"
+            min="0"
+            placeholder="0"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>{{ 'tourLogForm.rating' | translate }}</label>
+        <div class="rating-input">
+          <span
+            *ngFor="let star of ratings"
+            class="star"
+            [class.filled]="star <= (tourLog.rating || 0)"
+            (click)="tourLog.rating = star"
+          >
+            {{ star <= (tourLog.rating || 0) ? '★' : '☆' }}
+          </span>
+        </div>
+        <input type="hidden" [(ngModel)]="tourLog.rating" name="rating" />
+      </div>
+
+      <div class="form-actions">
+        <button type="button" (click)="onCancel()" class="btn-secondary">{{ 'tourLogForm.cancel' | translate }}</button>
+        <button type="submit" [disabled]="saving" class="btn-primary">
+          {{
+            saving
+              ? ('tourLogForm.saving' | translate)
+              : ((isEditMode ? 'tourLogForm.update' : 'tourLogForm.create') | translate)
+          }}
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
