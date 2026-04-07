@@ -13,7 +13,7 @@ import { TourLogListComponent } from '../tour-log-list/tour-log-list.component';
   templateUrl: './tour-detail.component.html',
   styleUrl: './tour-detail.component.css'
 })
-export class TourDetailComponent implements OnInit {  // ← ✅ "export" VOR "class"!
+export class TourDetailComponent implements OnInit {
   private tourService: TourService = inject(TourService);
   private route = inject(ActivatedRoute);
   protected router = inject(Router);

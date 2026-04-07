@@ -11,7 +11,7 @@ import { Tour } from '../../models/tour.model';
   templateUrl: './tour-list.component.html',
   styleUrl: './tour-list.component.css'
 })
-export class TourListComponent implements OnInit {  // ← ✅ "export" VOR "class"!
+export class TourListComponent implements OnInit {
   private tourService: TourService = inject(TourService);
   private router = inject(Router);
 
