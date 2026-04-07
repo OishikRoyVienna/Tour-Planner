@@ -12,7 +12,7 @@ import { Tour } from '../../models/tour.model';
   templateUrl: './tour-form.component.html',
   styleUrl: './tour-form.component.css'
 })
-export class TourFormComponent implements OnInit {  // ← ✅ "export" VOR "class"!
+export class TourFormComponent implements OnInit {
   private tourService = inject(TourService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);

@@ -1,10 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';  // ← NEU!
+import { HttpErrorResponse } from '@angular/common/http'
 
-import { TourService } from '../services/tour.service';  // ← NEU! Import hinzufügen!
-import { Tour } from '../models/tour.model';  // ← NEU!
+import { TourService } from '../services/tour.service';
+import { Tour } from '../models/tour.model';
 
 @Component({
   selector: 'app-dashboard',
