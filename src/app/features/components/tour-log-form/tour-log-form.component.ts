@@ -93,7 +93,7 @@ export class TourLogFormComponent implements OnInit {
       this.tourLogService.updateLog(this.logId, logData).subscribe({
         next: () => {
           this.saving = false;
-          this.router.navigate(['/tours', this.tourId]);
+          this.router.navigate(['/dashboard']);
         },
         error: (err) => {
           this.error = err.message;
@@ -104,7 +104,7 @@ export class TourLogFormComponent implements OnInit {
       this.tourLogService.createLog(logData).subscribe({
         next: () => {
           this.saving = false;
-          this.router.navigate(['/tours', this.tourId]);
+          this.router.navigate(['/dashboard']);
         },
         error: (err) => {
           this.error = err.message;
@@ -115,7 +115,7 @@ export class TourLogFormComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.router.navigate(['/tours', this.tourId]);
+    this.router.navigate(['/dashboard']);
   }
 
   getDifficultyColor(value: 'EASY' | 'MEDIUM' | 'HARD' | undefined): string {

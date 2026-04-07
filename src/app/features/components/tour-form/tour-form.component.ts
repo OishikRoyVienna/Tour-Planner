@@ -74,7 +74,7 @@ export class TourFormComponent implements OnInit {  // ← ✅ "export" VOR "cla
       this.tourService.updateTour(this.tourId, this.tour).subscribe({
         next: () => {
           this.saving = false;
-          this.router.navigate(['/tours', this.tourId]);
+          this.router.navigate(['/dashboard']);
         },
         error: (err) => {
           this.error = err.message;
@@ -83,9 +83,9 @@ export class TourFormComponent implements OnInit {  // ← ✅ "export" VOR "cla
       });
     } else {
       this.tourService.createTour(this.tour as Omit<Tour, 'id'>).subscribe({
-        next: (newTour) => {
+        next: () => {
           this.saving = false;
-          this.router.navigate(['/tours', newTour.id]);
+          this.router.navigate(['/dashboard']);
         },
         error: (err) => {
           this.error = err.message;
@@ -96,10 +96,6 @@ export class TourFormComponent implements OnInit {  // ← ✅ "export" VOR "cla
   }
 
   onCancel(): void {
-    if (this.tourId) {
-      this.router.navigate(['/tours', this.tourId]);
-    } else {
-      this.router.navigate(['/tours']);
-    }
+    this.router.navigate(['/dashboard']);
   }
 }

@@ -53,7 +53,7 @@ export class TourDetailComponent implements OnInit {  // ← ✅ "export" VOR "c
     if (confirm('Are you sure you want to delete this tour?')) {
       this.tourService.deleteTour(this.tour.id).subscribe({
         next: () => {
-          this.router.navigate(['/tours']);
+          this.router.navigate(['/dashboard']);
         },
         error: (err: HttpErrorResponse) => {
           this.error = err.message;
