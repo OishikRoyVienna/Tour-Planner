@@ -4,16 +4,16 @@ Users can create tours in advance and manage logs with statistical data of accom
 
 ## Installation and Getting Started
 # 1. Clone the repository
-git clone https://github.com/OishikRoyVienna/Tour-Planner.git
-cd Tour-Planner
+- git clone https://github.com/OishikRoyVienna/Tour-Planner.git
+- cd your_path_where_you_cloned_the_repo
 
 # 2. Install dependencies
-yarn install
+- yarn install
 
 # 3. Start the development server
-yarn start
+- yarn start
 
-Access the Application
+# Access the Application
 Open a browser of your choice and type in following URL: http://localhost:4200
 
 👤 User Guide (How to use the Application)
