@@ -1,59 +1,35 @@
-# Swen2project
+📖 Overview
+TourPlanner is a web-based application for planning and tracking tours (bike, hike, running, or vacation).
+Users can create tours in advance and manage logs with statistical data of accomplished tours.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.3.
+Installation and Getting Started
+# 1. Clone the repository
+git clone https://github.com/OishikRoyVienna/Tour-Planner.git
+cd Tour-Planner
 
-## Development server
+# 2. Install dependencies
+yarn install
 
-To start a local development server, run:
+# 3. Start the development server
+yarn start
 
-```bash
-ng serve
-```
+Access the Application
+Open a browser of your choice and type in following URL: http://localhost:4200
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+👤 User Guide (How to use the Application)
+# Step 1: Register
+- 1. Navigate to http://localhost:4200
+- 2. Click "Register" link
+- 3. Fill in credentials
+- 4. Click "Register" and you will be redirected to login
 
-## Code scaffolding
+# Step 2: Login
+- 1. Login in with your credentials which you determined in the registration process
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+# Step 3: Create a Tour
 
-```bash
-ng generate component component-name
-```
+- 1. From Dashboard, click "+ New Tour" card
+- 2.  Fill in tour details:
+- 3. Click "Create Tour"
+- 4. You will be redirected to Tour Detail view
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
