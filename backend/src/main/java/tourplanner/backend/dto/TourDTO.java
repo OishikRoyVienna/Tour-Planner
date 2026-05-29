@@ -43,4 +43,7 @@ public class TourDTO {
 
     @NotNull(message = "User ID is required")
     private Long userId;
+
+    private Integer popularity;
+    private Boolean childFriendly;
 }

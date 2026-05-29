@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { InMemoryTourLogService } from '../../../core/in-memory-tour-log.service';
+import { TourLogService } from '../../services/tour-log.service';
 import { TourLog } from '../../models/tour-log.model';
 import { TranslatePipe } from '../../../core/translate.pipe';
 import { I18nService } from '../../../core/i18n.service';
@@ -14,7 +14,7 @@ import { I18nService } from '../../../core/i18n.service';
   styleUrl: './tour-log-list.component.css'
 })
 export class TourLogListComponent implements OnInit {
-  private tourLogService = inject(InMemoryTourLogService);
+  private tourLogService = inject(TourLogService);
   private router = inject(Router);
   private readonly i18n = inject(I18nService);
 
@@ -69,19 +69,13 @@ export class TourLogListComponent implements OnInit {
 
   getDifficultyLabel(difficulty: 'EASY' | 'MEDIUM' | 'HARD' | undefined): string {
     this.i18n.lang();
-    if (!difficulty) {
-      return this.i18n.t('common.unknown');
-    }
+    if (!difficulty) return this.i18n.t('common.unknown');
     return this.i18n.t(`tourLogList.difficulty.${difficulty}`);
   }
 
   getDifficultyColor(difficulty: 'EASY' | 'MEDIUM' | 'HARD' | undefined): string {
     if (!difficulty) return '#999';
-    const colors: { [key: string]: string } = {
-      'EASY': '#4CAF50',
-      'MEDIUM': '#FFC107',
-      'HARD': '#F44336'
-    };
+    const colors: { [key: string]: string } = { 'EASY': '#4CAF50', 'MEDIUM': '#FFC107', 'HARD': '#F44336' };
     return colors[difficulty] || '#999';
   }
 

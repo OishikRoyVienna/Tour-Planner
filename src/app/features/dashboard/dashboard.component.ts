@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { TourService } from '../services/tour.service';
+import { AuthService } from '../services/auth.service';
 import { Tour } from '../models/tour.model';
 import { TranslatePipe } from '../../core/translate.pipe';
 import { I18nService } from '../../core/i18n.service';
@@ -18,6 +19,7 @@ import { LanguageToggleComponent } from '../../core/language-toggle.component';
 })
 export class DashboardComponent implements OnInit {
   private tourService: TourService = inject(TourService);
+  private authService = inject(AuthService);
   private readonly i18n = inject(I18nService);
 
   username: string = 'User';
@@ -28,8 +30,6 @@ export class DashboardComponent implements OnInit {
   readonly quickLinks = [
     { icon: '➕', titleKey: 'dashboard.quickTitle', descKey: 'dashboard.quickDesc', accent: 'violet' }
   ] as const;
-
-  currentUserId = 1;
 
   constructor(private router: Router) {}
 
@@ -47,7 +47,7 @@ export class DashboardComponent implements OnInit {
   }
 
   loadStats(): void {
-    this.tourService.getTours(this.currentUserId).subscribe({
+    this.tourService.getTours(this.authService.getUserId()).subscribe({
       next: (tours: Tour[]) => {
         this.tours = tours;
         this.activeToursCount = tours.length;
@@ -84,8 +84,7 @@ export class DashboardComponent implements OnInit {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
+    this.authService.logout();
     this.router.navigate(['/login']);
   }
 }

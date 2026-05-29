@@ -5,9 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import tourplanner.backend.dto.TourDTO;
+import tourplanner.backend.service.RouteService;
 import tourplanner.backend.service.TourService;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/tours")
@@ -18,9 +20,25 @@ public class TourController {
     @Autowired
     private TourService tourService;
 
+    @Autowired
+    private RouteService routeService;
+
     @GetMapping
     public ResponseEntity<List<TourDTO>> getAllTours(@RequestParam Long userId) {
         return ResponseEntity.ok(tourService.getToursByUser(userId));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<TourDTO>> searchTours(@RequestParam Long userId, @RequestParam String q) {
+        return ResponseEntity.ok(tourService.searchTours(userId, q));
+    }
+
+    @GetMapping("/route")
+    public ResponseEntity<Map<String, Object>> getRoute(
+            @RequestParam String from,
+            @RequestParam String to,
+            @RequestParam String transportType) {
+        return ResponseEntity.ok(routeService.getRoute(from, to, transportType));
     }
 
     @GetMapping("/{id}")
