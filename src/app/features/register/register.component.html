@@ -8,51 +8,6 @@
 
     <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" novalidate>
       <div class="form-group">
-        <label for="firstName">{{ 'register.firstName' | translate }}</label>
-        <input
-          type="text"
-          id="firstName"
-          [(ngModel)]="firstName"
-          name="firstName"
-          #firstNameModel="ngModel"
-          required
-          [disabled]="isLoading"
-        />
-        <small class="validation-error" *ngIf="(firstNameModel.touched || submitted) && firstNameModel.invalid">
-          <span *ngIf="firstNameModel.errors?.['required']">{{ 'register.err.first' | translate }}</span>
-        </small>
-      </div>
-      <div class="form-group">
-        <label for="lastName">{{ 'register.lastName' | translate }}</label>
-        <input
-          type="text"
-          id="lastName"
-          [(ngModel)]="lastName"
-          name="lastName"
-          #lastNameModel="ngModel"
-          required
-          [disabled]="isLoading"
-        />
-        <small class="validation-error" *ngIf="(lastNameModel.touched || submitted) && lastNameModel.invalid">
-          <span *ngIf="lastNameModel.errors?.['required']">{{ 'register.err.last' | translate }}</span>
-        </small>
-      </div>
-      <div class="form-group">
-        <label for="birthday">{{ 'register.birthday' | translate }}</label>
-        <input
-          type="date"
-          id="birthday"
-          [(ngModel)]="birthday"
-          name="birthday"
-          #birthdayModel="ngModel"
-          required
-          [disabled]="isLoading"
-        />
-        <small class="validation-error" *ngIf="(birthdayModel.touched || submitted) && birthdayModel.invalid">
-          <span *ngIf="birthdayModel.errors?.['required']">{{ 'register.err.birth' | translate }}</span>
-        </small>
-      </div>
-      <div class="form-group">
         <label for="email">{{ 'register.email' | translate }}</label>
         <input
           type="email"
@@ -64,10 +19,16 @@
           email
           [disabled]="isLoading"
         />
-        <small class="validation-error" *ngIf="(emailModel.touched || submitted) && emailModel.invalid">
-          <span *ngIf="emailModel.errors?.['required']">{{ 'register.err.emailReq' | translate }}</span>
-          <span *ngIf="emailModel.errors?.['email']">{{ 'register.err.emailFmt' | translate }}</span>
-        </small>
+        @if ((emailModel.touched || submitted) && emailModel.invalid) {
+          <small class="validation-error">
+            @if (emailModel.errors?.['required']) {
+              <span>{{ 'register.err.emailReq' | translate }}</span>
+            }
+            @if (emailModel.errors?.['email']) {
+              <span>{{ 'register.err.emailFmt' | translate }}</span>
+            }
+          </small>
+        }
       </div>
       <div class="form-group">
         <label for="username">{{ 'register.username' | translate }}</label>
@@ -80,9 +41,11 @@
           required
           [disabled]="isLoading"
         />
-        <small class="validation-error" *ngIf="(usernameModel.touched || submitted) && usernameModel.invalid">
-          <span *ngIf="usernameModel.errors?.['required']">{{ 'register.err.user' | translate }}</span>
-        </small>
+        @if ((usernameModel.touched || submitted) && usernameModel.invalid) {
+          <small class="validation-error">
+            <span>{{ 'register.err.user' | translate }}</span>
+          </small>
+        }
       </div>
       <div class="form-group">
         <label for="password">{{ 'register.password' | translate }}</label>
@@ -93,13 +56,19 @@
           name="password"
           #passwordModel="ngModel"
           required
-          minlength="9"
+          minlength="4"
           [disabled]="isLoading"
         />
-        <small class="validation-error" *ngIf="(passwordModel.touched || submitted) && passwordModel.invalid">
-          <span *ngIf="passwordModel.errors?.['required']">{{ 'register.err.passReq' | translate }}</span>
-          <span *ngIf="passwordModel.errors?.['minlength']">{{ 'register.err.passLen' | translate }}</span>
-        </small>
+        @if ((passwordModel.touched || submitted) && passwordModel.invalid) {
+          <small class="validation-error">
+            @if (passwordModel.errors?.['required']) {
+              <span>{{ 'register.err.passReq' | translate }}</span>
+            }
+            @if (passwordModel.errors?.['minlength']) {
+              <span>{{ 'register.err.passLen' | translate }}</span>
+            }
+          </small>
+        }
       </div>
 
       <button type="submit" [disabled]="isLoading || registerForm.invalid">
@@ -111,9 +80,11 @@
         <a routerLink="/login">{{ 'register.loginLink' | translate }}</a>
       </p>
 
-      <div *ngIf="message" [class.error]="isError" [class.success]="!isError">
-        {{ message }}
-      </div>
+      @if (message) {
+        <div [class.error]="isError" [class.success]="!isError">
+          {{ message }}
+        </div>
+      }
     </form>
     </div>
   </div>

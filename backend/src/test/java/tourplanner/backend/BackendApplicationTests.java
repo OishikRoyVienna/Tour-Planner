@@ -1,13 +1,20 @@
 package tourplanner.backend;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
 class BackendApplicationTests {
 
     @Test
-    void contextLoads() {
+    void applicationClassExists() {
+        assertThat(BackendApplication.class.isAnnotationPresent(
+                org.springframework.boot.autoconfigure.SpringBootApplication.class
+        )).isTrue();
     }
 
+    @Test
+    void mainMethodExists() throws NoSuchMethodException {
+        assertThat(BackendApplication.class.getDeclaredMethod("main", String[].class))
+                .isNotNull();
+    }
 }

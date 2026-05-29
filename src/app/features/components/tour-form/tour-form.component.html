@@ -10,10 +10,12 @@
       <p class="subtitle">{{ (isEditMode ? 'tourForm.subtitleEdit' : 'tourForm.subtitleCreate') | translate }}</p>
     </div>
 
-    <div *ngIf="error" class="error-message">
-      <span class="error-icon">⚠️</span>
-      {{ error }}
-    </div>
+    @if (error) {
+      <div class="error-message">
+        <span class="error-icon">⚠️</span>
+        {{ error }}
+      </div>
+    }
 
     <form (ngSubmit)="onSubmit()" class="tour-form">
       <div class="form-section">
@@ -89,17 +91,28 @@
           </div>
         </div>
 
+        <!-- ORS Route Button -->
         <div class="form-group">
-          <label for="routeInformation">{{ 'tourForm.routeInfo' | translate }}</label>
-          <textarea
-            id="routeInformation"
-            [(ngModel)]="tour.routeInformation"
-            name="routeInformation"
-            rows="3"
-            [attr.placeholder]="'tourForm.routeInfoPh' | translate"
-            class="form-textarea"
-          ></textarea>
+          <button
+            type="button"
+            (click)="fetchRoute()"
+            [disabled]="fetchingRoute"
+            class="btn-route"
+          >
+            {{ fetchingRoute ? '⏳ Berechne Route...' : '🗺️ Route & Distanz berechnen (ORS)' }}
+          </button>
         </div>
+
+        @if (tour.distance || tour.estimatedTime) {
+          <div class="route-result">
+            @if (tour.distance) {
+              <span>📏 {{ tour.distance }} km</span>
+            }
+            @if (tour.estimatedTime) {
+              <span>⏱️ {{ tour.estimatedTime }} min</span>
+            }
+          </div>
+        }
       </div>
 
       <div class="form-section">
@@ -119,9 +132,9 @@
                 name="transportType"
                 class="form-select"
               >
-                <option *ngFor="let tv of transportValues" [value]="tv">
-                  {{ ('tourForm.transport.' + tv) | translate }}
-                </option>
+                @for (tv of transportValues; track tv) {
+                  <option [value]="tv">{{ ('tourForm.transport.' + tv) | translate }}</option>
+                }
               </select>
             </div>
           </div>
@@ -176,24 +189,6 @@
             </div>
             <span class="input-hint">{{ 'tourForm.timeHint' | translate }}</span>
           </div>
-        </div>
-      </div>
-
-      <div class="form-section">
-        <h3 class="section-title">
-          <span class="section-icon">⚙️</span>
-          {{ 'tourForm.sectionOptions' | translate }}
-        </h3>
-
-        <div class="checkbox-group">
-          <label class="checkbox-label">
-            <input type="checkbox" [(ngModel)]="tour.childFriendly" name="childFriendly" class="custom-checkbox" />
-            <span class="checkbox-custom"></span>
-            <span class="checkbox-text">
-              <span class="checkbox-icon">👨‍👩‍👧‍👦</span>
-              {{ 'tourForm.childFriendly' | translate }}
-            </span>
-          </label>
         </div>
       </div>
 

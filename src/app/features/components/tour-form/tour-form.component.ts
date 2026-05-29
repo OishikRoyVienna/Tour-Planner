@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TourService } from '../../services/tour.service';
+import { AuthService } from '../../services/auth.service';
 import { Tour } from '../../models/tour.model';
 import { TranslatePipe } from '../../../core/translate.pipe';
 import { LanguageToggleComponent } from '../../../core/language-toggle.component';
@@ -17,6 +18,7 @@ import { I18nService } from '../../../core/i18n.service';
 })
 export class TourFormComponent implements OnInit {
   private tourService = inject(TourService);
+  private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private readonly i18n = inject(I18nService);
@@ -31,24 +33,21 @@ export class TourFormComponent implements OnInit {
     estimatedTime: 0,
     routeInformation: '',
     imagePath: '',
-    userId: 1,
-    popularity: 0,
-    childFriendly: false
   };
 
   isEditMode = false;
   tourId: number | null = null;
   error: string | null = null;
   saving = false;
+  fetchingRoute = false;
 
   readonly transportValues: Array<'HIKE' | 'BIKE' | 'RUNNING' | 'VACATION'> = [
-    'HIKE',
-    'BIKE',
-    'RUNNING',
-    'VACATION'
+    'HIKE', 'BIKE', 'RUNNING', 'VACATION'
   ];
 
   ngOnInit(): void {
+    this.tour.userId = this.authService.getUserId();
+
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
@@ -61,11 +60,34 @@ export class TourFormComponent implements OnInit {
 
   loadTour(id: number): void {
     this.tourService.getTour(id).subscribe({
-      next: (tour) => {
-        this.tour = { ...tour };
+      next: (tour) => { this.tour = { ...tour }; },
+      error: (err) => { this.error = err.message; }
+    });
+  }
+
+  fetchRoute(): void {
+    if (!this.tour.fromLocation || !this.tour.toLocation) {
+      this.error = 'Bitte Start- und Zielort eingeben';
+      return;
+    }
+
+    this.fetchingRoute = true;
+    this.error = null;
+
+    this.tourService.getRoute(
+      this.tour.fromLocation,
+      this.tour.toLocation,
+      this.tour.transportType ?? 'HIKE'
+    ).subscribe({
+      next: (routeInfo) => {
+        this.tour.distance = routeInfo.distance;
+        this.tour.estimatedTime = routeInfo.estimatedTime;
+        this.tour.routeInformation = routeInfo.routeInformation;
+        this.fetchingRoute = false;
       },
       error: (err) => {
-        this.error = err.message;
+        this.error = err.error?.message ?? 'Route konnte nicht berechnet werden';
+        this.fetchingRoute = false;
       }
     });
   }
@@ -81,30 +103,18 @@ export class TourFormComponent implements OnInit {
 
     if (this.isEditMode && this.tourId) {
       this.tourService.updateTour(this.tourId, this.tour).subscribe({
-        next: () => {
-          this.saving = false;
-          this.router.navigate(['/dashboard']);
-        },
-        error: (err) => {
-          this.error = err.message;
-          this.saving = false;
-        }
+        next: () => { this.saving = false; this.router.navigate(['/tours']); },
+        error: (err) => { this.error = err.error?.message ?? err.message; this.saving = false; }
       });
     } else {
       this.tourService.createTour(this.tour as Omit<Tour, 'id'>).subscribe({
-        next: () => {
-          this.saving = false;
-          this.router.navigate(['/dashboard']);
-        },
-        error: (err) => {
-          this.error = err.message;
-          this.saving = false;
-        }
+        next: () => { this.saving = false; this.router.navigate(['/tours']); },
+        error: (err) => { this.error = err.error?.message ?? err.message; this.saving = false; }
       });
     }
   }
 
   onCancel(): void {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/tours']);
   }
 }

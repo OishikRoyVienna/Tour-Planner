@@ -1,58 +1,46 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Tour } from '../models/tour.model';
+import { environment } from '../environments/environments';
+
+export interface RouteInfo {
+  distance: number;
+  estimatedTime: number;
+  routeInformation: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class TourService {
-  // Temporäre Tours im Speicher
-  private tours: Tour[] = [];
-  private nextId = 1;
+  private http = inject(HttpClient);
+  private readonly baseUrl = `${environment.apiUrl}/tours`;
 
   getTours(userId: number): Observable<Tour[]> {
-    const userTours = this.tours.filter(t => t.userId === userId);
-    console.log('✅ Fetched tours from memory:', userTours);
-    return of(userTours);
+    return this.http.get<Tour[]>(`${this.baseUrl}?userId=${userId}`);
   }
 
   getTour(id: number): Observable<Tour> {
-    const tour = this.tours.find(t => t.id === id);
-    if (!tour) {
-      throw new Error(`Tour with ID ${id} not found`);
-    }
-    return of(tour);
+    return this.http.get<Tour>(`${this.baseUrl}/${id}`);
+  }
+
+  searchTours(userId: number, query: string): Observable<Tour[]> {
+    return this.http.get<Tour[]>(`${this.baseUrl}/search?userId=${userId}&q=${encodeURIComponent(query)}`);
   }
 
   createTour(tourData: Omit<Tour, 'id'>): Observable<Tour> {
-    const newTour: Tour = {
-      ...tourData,
-      id: this.nextId++
-    };
-    this.tours.push(newTour);
-    console.log('✅ Created tour in memory:', newTour);
-    return of(newTour);
+    return this.http.post<Tour>(this.baseUrl, tourData);
   }
 
   updateTour(id: number, tourData: Partial<Tour>): Observable<Tour> {
-    const index = this.tours.findIndex(t => t.id === id);
-    if (index === -1) {
-      throw new Error(`Tour with ID ${id} not found`);
-    }
-
-    const updatedTour: Tour = {
-      ...this.tours[index],
-      ...tourData
-    };
-    this.tours[index] = updatedTour;
-    return of(updatedTour);
+    return this.http.put<Tour>(`${this.baseUrl}/${id}`, tourData);
   }
 
   deleteTour(id: number): Observable<void> {
-    const index = this.tours.findIndex(t => t.id === id);
-    if (index === -1) {
-      throw new Error(`Tour with ID ${id} not found`);
-    }
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
 
-    this.tours.splice(index, 1);
-    return of(undefined);
+  getRoute(from: string, to: string, transportType: string): Observable<RouteInfo> {
+    const params = `from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&transportType=${transportType}`;
+    return this.http.get<RouteInfo>(`${this.baseUrl}/route?${params}`);
   }
 }
