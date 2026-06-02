@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { InMemoryTourLogService } from '../../../core/in-memory-tour-log.service';
+import { TourLogService } from '../../services/tour-log.service';
 import { TourLog } from '../../models/tour-log.model';
 import { TranslatePipe } from '../../../core/translate.pipe';
 import { LanguageToggleComponent } from '../../../core/language-toggle.component';
@@ -16,7 +16,7 @@ import { I18nService } from '../../../core/i18n.service';
   styleUrl: './tour-log-form.component.css'
 })
 export class TourLogFormComponent implements OnInit {
-  private tourLogService = inject(InMemoryTourLogService);
+  private tourLogService = inject(TourLogService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private readonly i18n = inject(I18nService);
@@ -92,10 +92,10 @@ export class TourLogFormComponent implements OnInit {
       this.tourLogService.updateLog(this.logId, logData).subscribe({
         next: () => {
           this.saving = false;
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/tours', this.tourId]);
         },
         error: err => {
-          this.error = err.message;
+          this.error = err.error?.message ?? err.message;
           this.saving = false;
         }
       });
@@ -103,10 +103,10 @@ export class TourLogFormComponent implements OnInit {
       this.tourLogService.createLog(logData).subscribe({
         next: () => {
           this.saving = false;
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/tours', this.tourId]);
         },
         error: err => {
-          this.error = err.message;
+          this.error = err.error?.message ?? err.message;
           this.saving = false;
         }
       });
@@ -114,6 +114,6 @@ export class TourLogFormComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/tours', this.tourId]);
   }
 }

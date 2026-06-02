@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { InMemoryAuthService } from '../../core/in-memory-auth.service';
+import { AuthService } from '../services/auth.service';
 import { TranslatePipe } from '../../core/translate.pipe';
 import { I18nService } from '../../core/i18n.service';
 import { LanguageToggleComponent } from '../../core/language-toggle.component';
@@ -16,8 +16,9 @@ import { LanguageToggleComponent } from '../../core/language-toggle.component';
 })
 export class LoginComponent {
   private readonly cdr = inject(ChangeDetectorRef);
-  private readonly auth = inject(InMemoryAuthService);
+  private readonly auth = inject(AuthService);
   private readonly i18n = inject(I18nService);
+  private readonly router = inject(Router);
 
   username: string = '';
   password: string = '';
@@ -25,25 +26,28 @@ export class LoginComponent {
   isError: boolean = false;
   isLoading: boolean = false;
 
-  constructor(private router: Router) {}
-
   onSubmit(): void {
+    if (!this.username || !this.password) {
+      this.message = this.i18n.t('auth.invalidLogin');
+      this.isError = true;
+      return;
+    }
+
     this.isLoading = true;
     this.message = '';
     this.cdr.detectChanges();
 
-    queueMicrotask(() => {
-      const ok = this.auth.login(this.username, this.password);
-      this.isLoading = false;
-      if (ok) {
-        localStorage.setItem('token', 'mock-token');
-        localStorage.setItem('username', this.username);
+    this.auth.login(this.username, this.password).subscribe({
+      next: () => {
+        this.isLoading = false;
         this.router.navigate(['/dashboard']);
-      } else {
+      },
+      error: () => {
+        this.isLoading = false;
         this.message = this.i18n.t('auth.invalidLogin');
         this.isError = true;
+        this.cdr.detectChanges();
       }
-      this.cdr.detectChanges();
     });
   }
 }

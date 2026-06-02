@@ -20,8 +20,8 @@ public class User {
     @Column(unique = true, nullable = false)
     private String username;
 
-    @Column(nullable = false)
-    private String password; // Wird gehasht gespeichert!
+    @Column(name = "password_hash", nullable = false)
+    private String password;
 
     @Column(unique = true)
     private String email;

@@ -14,32 +14,69 @@
 
   <h2>{{ 'tourList.heading' | translate }}</h2>
 
+  <!-- Suche -->
+  <div class="search-bar">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (keyup.enter)="onSearch()"
+      placeholder="🔍 Touren durchsuchen..."
+      class="search-input"
+    />
+    <button type="button" (click)="onSearch()" class="btn-search">Suchen</button>
+    @if (searchQuery) {
+      <button type="button" (click)="searchQuery = ''; loadTours()" class="btn-clear">✕</button>
+    }
+  </div>
+
+  <!-- Aktionen -->
   <div class="button-group">
     <button type="button" (click)="loadTours()" class="btn-refresh">{{ 'tourList.refresh' | translate }}</button>
     <button type="button" (click)="createNewTour()" class="btn-primary">{{ 'tourList.newTour' | translate }}</button>
+    <button type="button" (click)="exportTours()" class="btn-export">📤 Export</button>
+    <label class="btn-import">
+      📥 Import
+      <input type="file" accept=".json" (change)="importTours($event)" style="display:none" />
+    </label>
   </div>
 
-  <div *ngIf="loading" class="loading">⏳ {{ 'tourList.loading' | translate }}</div>
+  @if (loading) {
+    <div class="loading">⏳ {{ 'tourList.loading' | translate }}</div>
+  }
+  @if (error) {
+    <div class="error">❌ {{ error }}</div>
+  }
 
-  <div *ngIf="error" class="error">❌ {{ error }}</div>
+  @if (!loading && !error && tours.length > 0) {
+    <ul class="tours">
+      @for (tour of tours; track tour.id) {
+        <li class="tour-card">
+          <h3>{{ tour.name }}</h3>
+          <p><strong>📍</strong> {{ tour.fromLocation }} → {{ tour.toLocation }}</p>
+          <p><strong>🚴</strong> {{ tour.transportType }}</p>
+          @if (tour.distance) {
+            <p><strong>📏</strong> {{ tour.distance }} km</p>
+          }
+          @if (tour.estimatedTime) {
+            <p><strong>⏱️</strong> {{ tour.estimatedTime }} min</p>
+          }
+          @if (tour.popularity !== undefined) {
+            <p><strong>⭐</strong> Beliebtheit: {{ tour.popularity }} Logs</p>
+          }
+          @if (tour.childFriendly !== undefined) {
+            <p><strong>{{ tour.childFriendly ? '👶 Kinderfreundlich' : '🏔️ Nicht kinderfreundlich' }}</strong></p>
+          }
+          <div class="actions">
+            <button type="button" (click)="viewTour(tour.id!)" class="btn-view">👁️ {{ 'tourList.view' | translate }}</button>
+            <button type="button" (click)="editTour(tour.id!)" class="btn-edit">✏️ {{ 'tourList.edit' | translate }}</button>
+            <button type="button" (click)="deleteTour(tour.id!)" class="btn-delete">🗑️ {{ 'tourList.delete' | translate }}</button>
+          </div>
+        </li>
+      }
+    </ul>
+  }
 
-  <ul *ngIf="!loading && !error && tours.length > 0" class="tours">
-    <li *ngFor="let tour of tours" class="tour-card">
-      <h3>{{ tour.name }}</h3>
-      <p><strong>📍</strong> {{ tour.fromLocation }} → {{ tour.toLocation }}</p>
-      <p><strong>🚴</strong> {{ tour.transportType }}</p>
-      <p *ngIf="tour.distance"><strong>📏</strong> {{ tour.distance }} km</p>
-      <p *ngIf="tour.estimatedTime"><strong>⏱️</strong> {{ tour.estimatedTime }} min</p>
-
-      <div class="actions">
-        <button type="button" (click)="viewTour(tour.id!)" class="btn-view">👁️ {{ 'tourList.view' | translate }}</button>
-        <button type="button" (click)="editTour(tour.id!)" class="btn-edit">✏️ {{ 'tourList.edit' | translate }}</button>
-        <button type="button" (click)="deleteTour(tour.id!)" class="btn-delete">🗑️ {{ 'tourList.delete' | translate }}</button>
-      </div>
-    </li>
-  </ul>
-
-  <p *ngIf="!loading && !error && tours.length === 0" class="empty">
-    🎒 {{ 'tourList.empty' | translate }}
-  </p>
+  @if (!loading && !error && tours.length === 0) {
+    <p class="empty">🎒 {{ 'tourList.empty' | translate }}</p>
+  }
 </div>
