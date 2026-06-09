@@ -15,6 +15,7 @@ import tourplanner.backend.exception.ValidationException;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 @Service
@@ -36,8 +37,9 @@ public class RouteService {
         double[] fromCoords = geocode(from);
         double[] toCoords = geocode(to);
 
-        String url = "https://api.openrouteservice.org/v2/directions/" + profile;
+        String url = "https://api.openrouteservice.org/v2/directions/" + profile + "/geojson";
         String body = String.format(
+                Locale.US,
                 "{\"coordinates\":[[%f,%f],[%f,%f]]}",
                 fromCoords[1], fromCoords[0],
                 toCoords[1], toCoords[0]
@@ -58,7 +60,7 @@ public class RouteService {
 
             String responseBody = response.body().string();
             JsonNode root = objectMapper.readTree(responseBody);
-            JsonNode summary = root.path("routes").get(0).path("summary");
+            JsonNode summary = root.path("features").get(0).path("properties").path("summary");
 
             double distanceMeters = summary.path("distance").asDouble();
             double durationSeconds = summary.path("duration").asDouble();

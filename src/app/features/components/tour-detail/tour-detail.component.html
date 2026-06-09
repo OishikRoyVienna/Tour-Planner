@@ -14,7 +14,7 @@
         <div class="tour-actions">
           <button (click)="editTour()" class="btn-edit">✏️ Edit</button>
           <button (click)="deleteTour()" class="btn-delete">🗑️ Delete</button>
-          <button (click)="router.navigate(['/tours'])" class="btn-back">← Back</button>
+          <button (click)="goToDashboard()" class="btn-back">{{ 'tourList.back' | translate }}</button>
         </div>
       </div>
 
