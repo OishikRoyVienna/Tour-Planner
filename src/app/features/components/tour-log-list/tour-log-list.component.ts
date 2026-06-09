@@ -4,12 +4,13 @@ import { Router, RouterLink } from '@angular/router';
 import { TourLogService } from '../../services/tour-log.service';
 import { TourLog } from '../../models/tour-log.model';
 import { TranslatePipe } from '../../../core/translate.pipe';
+import { DurationPipe } from '../../../core/duration.pipe';
 import { I18nService } from '../../../core/i18n.service';
 
 @Component({
   selector: 'app-tour-log-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, TranslatePipe],
+  imports: [CommonModule, RouterLink, TranslatePipe, DurationPipe],
   templateUrl: './tour-log-list.component.html',
   styleUrl: './tour-log-list.component.css'
 })

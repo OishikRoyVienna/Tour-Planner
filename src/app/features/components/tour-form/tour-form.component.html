@@ -109,7 +109,7 @@
               <span>📏 {{ tour.distance }} km</span>
             }
             @if (tour.estimatedTime) {
-              <span>⏱️ {{ tour.estimatedTime }} min</span>
+              <span>⏱️ {{ tour.estimatedTime | duration }}</span>
             }
           </div>
         }

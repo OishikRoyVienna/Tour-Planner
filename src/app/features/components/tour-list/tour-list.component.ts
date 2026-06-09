@@ -6,6 +6,7 @@ import { TourService } from '../../services/tour.service';
 import { AuthService } from '../../services/auth.service';
 import { Tour } from '../../models/tour.model';
 import { TranslatePipe } from '../../../core/translate.pipe';
+import { DurationPipe } from '../../../core/duration.pipe';
 import { LanguageToggleComponent } from '../../../core/language-toggle.component';
 import { I18nService } from '../../../core/i18n.service';
 import { environment } from '../../environments/environments';
@@ -13,7 +14,7 @@ import { environment } from '../../environments/environments';
 @Component({
   selector: 'app-tour-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe, LanguageToggleComponent],
+  imports: [CommonModule, FormsModule, TranslatePipe, DurationPipe, LanguageToggleComponent],
   templateUrl: './tour-list.component.html',
   styleUrl: './tour-list.component.css'
 })

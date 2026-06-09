@@ -40,7 +40,7 @@
 
           <div class="stat" *ngIf="log.totalTime">
             <span class="stat-label">{{ 'tourLogList.time' | translate }}:</span>
-            <span class="stat-value">{{ log.totalTime }} min</span>
+            <span class="stat-value">{{ log.totalTime | duration }}</span>
           </div>
 
           <div class="stat" *ngIf="log.rating">

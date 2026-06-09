@@ -58,7 +58,7 @@
             <p><strong>📏</strong> {{ tour.distance }} km</p>
           }
           @if (tour.estimatedTime) {
-            <p><strong>⏱️</strong> {{ tour.estimatedTime }} min</p>
+            <p><strong>⏱️</strong> {{ tour.estimatedTime | duration }}</p>
           }
           @if (tour.popularity !== undefined) {
             <p><strong>⭐</strong> Beliebtheit: {{ tour.popularity }} Logs</p>

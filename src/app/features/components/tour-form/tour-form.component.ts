@@ -6,13 +6,14 @@ import { TourService } from '../../services/tour.service';
 import { AuthService } from '../../services/auth.service';
 import { Tour } from '../../models/tour.model';
 import { TranslatePipe } from '../../../core/translate.pipe';
+import { DurationPipe } from '../../../core/duration.pipe';
 import { LanguageToggleComponent } from '../../../core/language-toggle.component';
 import { I18nService } from '../../../core/i18n.service';
 
 @Component({
   selector: 'app-tour-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe, LanguageToggleComponent],
+  imports: [CommonModule, FormsModule, TranslatePipe, DurationPipe, LanguageToggleComponent],
   templateUrl: './tour-form.component.html',
   styleUrl: './tour-form.component.css'
 })
@@ -41,8 +42,8 @@ export class TourFormComponent implements OnInit {
   saving = false;
   fetchingRoute = false;
 
-  readonly transportValues: Array<'HIKE' | 'BIKE' | 'RUNNING' | 'VACATION' | 'AUTO'> = [
-    'HIKE', 'BIKE', 'RUNNING', 'VACATION', 'AUTO'
+  readonly transportValues: Array<'HIKE' | 'BIKE' | 'RUNNING' | 'AUTO'> = [
+    'HIKE', 'BIKE', 'RUNNING', 'AUTO'
   ];
 
   ngOnInit(): void {

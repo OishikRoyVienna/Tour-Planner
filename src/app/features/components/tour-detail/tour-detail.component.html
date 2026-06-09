@@ -49,7 +49,7 @@
           @if (tour.estimatedTime) {
             <div class="info-item">
               <strong>⏱️ Estimated Time:</strong>
-              <span>{{ tour.estimatedTime }} minutes</span>
+              <span>{{ tour.estimatedTime | duration }}</span>
             </div>
           }
           <div class="info-item">

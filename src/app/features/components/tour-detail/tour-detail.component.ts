@@ -8,11 +8,12 @@ import { TourService } from '../../services/tour.service';
 import { TourLogListComponent } from '../tour-log-list/tour-log-list.component';
 import { I18nService } from '../../../core/i18n.service';
 import { TranslatePipe } from '../../../core/translate.pipe';
+import { DurationPipe } from '../../../core/duration.pipe';
 
 @Component({
   selector: 'app-tour-detail',
   standalone: true,
-  imports: [CommonModule, TourLogListComponent, TranslatePipe],
+  imports: [CommonModule, TourLogListComponent, TranslatePipe, DurationPipe],
   templateUrl: './tour-detail.component.html',
   styleUrl: './tour-detail.component.css'
 })

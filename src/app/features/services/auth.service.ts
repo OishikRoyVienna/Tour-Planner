@@ -33,7 +33,8 @@ export class AuthService {
   }
 
   getUserId(): number {
-    return Number(localStorage.getItem('userId') ?? '1');
+    const id = Number(localStorage.getItem('userId'));
+    return Number.isFinite(id) && id > 0 ? id : 0;
   }
 
   getUsername(): string {
