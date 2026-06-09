@@ -101,6 +101,7 @@ public class RouteService {
         return switch (transportType.toUpperCase()) {
             case "BIKE" -> "cycling-regular";
             case "HIKE", "RUNNING" -> "foot-hiking";
+            case "AUTO", "CAR", "VACATION" -> "driving-car";
             default -> "driving-car";
         };
     }

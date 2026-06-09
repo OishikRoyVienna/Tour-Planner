@@ -180,7 +180,7 @@ export class TourDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getTransportIcon(type: string): string {
     const icons: { [key: string]: string } = {
-      'BIKE': '🚴', 'HIKE': '🥾', 'RUNNING': '🏃', 'VACATION': '🏖️', 'CAR': '🚗'
+      'BIKE': '🚴', 'HIKE': '🥾', 'RUNNING': '🏃', 'VACATION': '🏖️', 'AUTO': '🚗', 'CAR': '🚗'
     };
     return icons[type] || '📍';
   }

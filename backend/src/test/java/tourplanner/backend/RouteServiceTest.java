@@ -48,6 +48,12 @@ class RouteServiceTest {
         assertThat(result).isEqualTo("driving-car");
     }
 
+    @Test
+    void toOrsProfile_auto_returnsDrivingCar() {
+        String result = invokeToOrsProfile("AUTO");
+        assertThat(result).isEqualTo("driving-car");
+    }
+
     private String invokeToOrsProfile(String type) {
         return (String) ReflectionTestUtils.invokeMethod(routeService, "toOrsProfile", type);
     }

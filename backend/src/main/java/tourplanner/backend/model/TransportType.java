@@ -4,5 +4,6 @@ public enum TransportType {
     BIKE,
     HIKE,
     RUNNING,
-    VACATION
+    VACATION,
+    AUTO
 }

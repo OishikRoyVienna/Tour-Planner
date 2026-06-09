@@ -41,8 +41,8 @@ export class TourFormComponent implements OnInit {
   saving = false;
   fetchingRoute = false;
 
-  readonly transportValues: Array<'HIKE' | 'BIKE' | 'RUNNING' | 'VACATION'> = [
-    'HIKE', 'BIKE', 'RUNNING', 'VACATION'
+  readonly transportValues: Array<'HIKE' | 'BIKE' | 'RUNNING' | 'VACATION' | 'AUTO'> = [
+    'HIKE', 'BIKE', 'RUNNING', 'VACATION', 'AUTO'
   ];
 
   ngOnInit(): void {
