@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import tourplanner.backend.dto.UserDTO;
+import tourplanner.backend.exception.InvalidCredentialsException;
+import tourplanner.backend.exception.UserAlreadyExistsException;
 import tourplanner.backend.exception.ValidationException;
 import tourplanner.backend.model.User;
 import tourplanner.backend.repository.UserRepository;
@@ -25,11 +27,11 @@ public class UserService {
         logger.info("Registering user: {}", userDTO.getUsername());
 
         if (userRepository.existsByUsername(userDTO.getUsername())) {
-            throw new ValidationException("Username already taken: " + userDTO.getUsername());
+            throw new UserAlreadyExistsException(userDTO.getUsername());
         }
         if (userDTO.getEmail() != null && !userDTO.getEmail().isBlank()
                 && userRepository.existsByEmail(userDTO.getEmail())) {
-            throw new ValidationException("Email already in use: " + userDTO.getEmail());
+            throw new UserAlreadyExistsException(userDTO.getEmail());
         }
 
         User user = new User();
@@ -51,11 +53,11 @@ public class UserService {
         logger.info("Login attempt for user: {}", username);
 
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new ValidationException("Invalid username or password"));
+                .orElseThrow(InvalidCredentialsException::new);
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
             logger.warn("Failed login attempt for user: {}", username);
-            throw new ValidationException("Invalid username or password");
+            throw new InvalidCredentialsException();
         }
 
         logger.info("User logged in successfully: {}", username);
