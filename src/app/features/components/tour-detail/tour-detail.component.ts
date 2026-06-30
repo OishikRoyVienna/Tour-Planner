@@ -9,6 +9,7 @@ import { TourLogListComponent } from '../tour-log-list/tour-log-list.component';
 import { I18nService } from '../../../core/i18n.service';
 import { TranslatePipe } from '../../../core/translate.pipe';
 import { DurationPipe } from '../../../core/duration.pipe';
+import { environment } from '../../environments/environments';
 
 @Component({
   selector: 'app-tour-detail',
@@ -177,6 +178,14 @@ export class TourDetailComponent implements OnInit, AfterViewInit, OnDestroy {
 
   goToDashboard(): void {
     this.router.navigate(['/dashboard']);
+  }
+
+  imagePreviewUrl(): string {
+    const path = this.tour?.imagePath ?? '';
+    if (path.startsWith('/api')) {
+      return environment.apiUrl.replace(/\/api$/, '') + path;
+    }
+    return path;
   }
 
   getTransportIcon(type: string): string {

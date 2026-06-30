@@ -178,6 +178,15 @@ label.required::after {
   color: #888;
 }
 
+.image-preview {
+  margin-top: 0.75rem;
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  object-fit: cover;
+  display: block;
+}
+
 /* Checkbox */
 .checkbox-group {
   margin-top: 1rem;

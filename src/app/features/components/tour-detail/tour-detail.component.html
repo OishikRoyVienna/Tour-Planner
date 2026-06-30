@@ -20,7 +20,7 @@
 
       @if (tour.imagePath) {
         <div class="tour-image">
-          <img [src]="tour.imagePath" [alt]="tour.name">
+          <img [src]="imagePreviewUrl()" [alt]="tour.name">
         </div>
       }
 

@@ -140,18 +140,23 @@
           </div>
 
           <div class="form-group">
-            <label for="imagePath">{{ 'tourForm.imageUrl' | translate }}</label>
+            <label for="imageFile">{{ 'tourForm.imageUrl' | translate }}</label>
             <div class="input-with-icon">
               <span class="input-icon">🖼️</span>
               <input
-                type="url"
-                id="imagePath"
-                [(ngModel)]="tour.imagePath"
-                name="imagePath"
-                [attr.placeholder]="'tourForm.imagePh' | translate"
+                type="file"
+                id="imageFile"
+                accept="image/png,image/jpeg,image/webp,image/gif"
+                (change)="onImageSelected($event)"
                 class="form-input"
               />
             </div>
+            @if (uploadingImage) {
+              <span class="input-hint">⏳ Bild wird hochgeladen...</span>
+            }
+            @if (tour.imagePath) {
+              <img [src]="imagePreviewUrl()" alt="Tour Vorschau" class="image-preview" />
+            }
           </div>
         </div>
 

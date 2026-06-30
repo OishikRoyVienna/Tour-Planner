@@ -9,6 +9,7 @@ import { TranslatePipe } from '../../../core/translate.pipe';
 import { DurationPipe } from '../../../core/duration.pipe';
 import { LanguageToggleComponent } from '../../../core/language-toggle.component';
 import { I18nService } from '../../../core/i18n.service';
+import { environment } from '../../environments/environments';
 
 @Component({
   selector: 'app-tour-form',
@@ -41,6 +42,7 @@ export class TourFormComponent implements OnInit {
   error: string | null = null;
   saving = false;
   fetchingRoute = false;
+  uploadingImage = false;
 
   readonly transportValues: Array<'HIKE' | 'BIKE' | 'RUNNING' | 'AUTO'> = [
     'HIKE', 'BIKE', 'RUNNING', 'AUTO'
@@ -91,6 +93,34 @@ export class TourFormComponent implements OnInit {
         this.fetchingRoute = false;
       }
     });
+  }
+
+  onImageSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    this.uploadingImage = true;
+    this.error = null;
+
+    this.tourService.uploadImage(file).subscribe({
+      next: (result) => {
+        this.tour.imagePath = result.imagePath;
+        this.uploadingImage = false;
+      },
+      error: (err) => {
+        this.error = err.error?.message ?? 'Bild konnte nicht hochgeladen werden';
+        this.uploadingImage = false;
+      }
+    });
+  }
+
+  imagePreviewUrl(): string {
+    const path = this.tour.imagePath ?? '';
+    if (path.startsWith('/api')) {
+      return environment.apiUrl.replace(/\/api$/, '') + path;
+    }
+    return path;
   }
 
   onSubmit(): void {

@@ -43,4 +43,10 @@ export class TourService {
     const params = `from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&transportType=${transportType}`;
     return this.http.get<RouteInfo>(`${this.baseUrl}/route?${params}`);
   }
+
+  uploadImage(file: File): Observable<{ imagePath: string }> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<{ imagePath: string }>(`${environment.apiUrl}/images/upload`, formData);
+  }
 }
