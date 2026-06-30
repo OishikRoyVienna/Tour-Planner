@@ -12,9 +12,9 @@
       <div class="tour-header">
         <h1>{{ tour.name }}</h1>
         <div class="tour-actions">
-          <button (click)="editTour()" class="btn-edit">✏️ Edit</button>
-          <button (click)="deleteTour()" class="btn-delete">🗑️ Delete</button>
-          <button (click)="goToDashboard()" class="btn-back">{{ 'tourList.back' | translate }}</button>
+          <button type="button" (click)="editTour()" class="btn-edit">✏️ {{ 'tourDetail.edit' | translate }}</button>
+          <button type="button" (click)="deleteTour()" class="btn-delete">🗑️ {{ 'tourDetail.delete' | translate }}</button>
+          <button type="button" (click)="goToDashboard()" class="btn-back">{{ 'tourList.back' | translate }}</button>
         </div>
       </div>
 

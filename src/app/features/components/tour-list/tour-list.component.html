@@ -33,11 +33,6 @@
   <div class="button-group">
     <button type="button" (click)="loadTours()" class="btn-refresh">{{ 'tourList.refresh' | translate }}</button>
     <button type="button" (click)="createNewTour()" class="btn-primary">{{ 'tourList.newTour' | translate }}</button>
-    <button type="button" (click)="exportTours()" class="btn-export">📤 Export</button>
-    <label class="btn-import">
-      📥 Import
-      <input type="file" accept=".json" (change)="importTours($event)" style="display:none" />
-    </label>
   </div>
 
   @if (loading) {

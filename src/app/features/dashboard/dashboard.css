@@ -8,10 +8,8 @@
   --dash-border: rgba(102, 126, 234, 0.18);
   --dash-shadow: 0 12px 40px rgba(45, 35, 95, 0.08);
   --dash-radius: 16px;
-  --dash-font: system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, sans-serif;
 
   min-height: 100vh;
-  font-family: var(--dash-font);
   color: var(--dash-text);
   background:
     radial-gradient(1200px 600px at 10% -10%, rgba(102, 126, 234, 0.14), transparent 55%),
@@ -403,6 +401,78 @@ h1 {
 
 .empty-section {
   margin-top: 0.5rem;
+}
+
+.search-section {
+  margin-bottom: 1.25rem;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--dash-card);
+  border: 1px solid var(--dash-border);
+  border-radius: var(--dash-radius);
+  box-shadow: var(--dash-shadow);
+}
+
+.search-icon {
+  opacity: 0.5;
+  padding-left: 0.25rem;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  padding: 0.5rem;
+  outline: none;
+  min-width: 0;
+  font-family: inherit;
+}
+
+.btn-search,
+.btn-clear {
+  border: none;
+  border-radius: 10px;
+  padding: 0.55rem 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: inherit;
+  transition: filter 0.2s;
+}
+
+.btn-search {
+  background: linear-gradient(135deg, var(--dash-purple), var(--dash-plum));
+  color: #fff;
+}
+
+.btn-search:hover {
+  filter: brightness(1.05);
+}
+
+.btn-clear {
+  background: var(--dash-soft);
+  color: var(--dash-muted);
+  width: 2.25rem;
+  padding: 0.55rem;
+}
+
+.search-status {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--dash-muted);
+}
+
+.search-empty-card {
+  padding: 2rem 1.5rem;
+}
+
+.search-empty-card .tour-open-btn {
+  margin-top: 1rem;
 }
 
 .empty-card {

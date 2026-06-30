@@ -31,8 +31,8 @@ export class TourFormComponent implements OnInit {
     fromLocation: '',
     toLocation: '',
     transportType: 'HIKE',
-    distance: 0,
-    estimatedTime: 0,
+    distance: undefined,
+    estimatedTime: undefined,
     routeInformation: '',
     imagePath: '',
   };
@@ -134,7 +134,7 @@ export class TourFormComponent implements OnInit {
 
     if (this.isEditMode && this.tourId) {
       this.tourService.updateTour(this.tourId, this.tour).subscribe({
-        next: () => { this.saving = false; this.router.navigate(['/tours']); },
+        next: () => { this.saving = false; this.router.navigate(['/tours', this.tourId]); },
         error: (err) => { this.error = err.error?.message ?? err.message; this.saving = false; }
       });
     } else {
@@ -146,6 +146,12 @@ export class TourFormComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.router.navigate(['/tours']);
+    if (this.isEditMode && this.tourId) {
+      this.router.navigate(['/tours', this.tourId]);
+      return;
+    }
+
+    const returnUrl = history.state?.['returnUrl'] as string | undefined;
+    this.router.navigateByUrl(returnUrl ?? '/dashboard');
   }
 }

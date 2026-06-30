@@ -47,6 +47,31 @@
       </div>
     </section>
 
+    <section class="search-section" aria-label="Touren suchen">
+      <div class="search-bar">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="onSearchQueryChange($event)"
+          (keyup.enter)="onSearch()"
+          [attr.placeholder]="'dashboard.searchPh' | translate"
+          class="search-input"
+        />
+        <button type="button" (click)="onSearch()" class="btn-search">{{ 'dashboard.search' | translate }}</button>
+        @if (searchQuery) {
+          <button
+            type="button"
+            (click)="clearSearch()"
+            class="btn-clear"
+            [attr.aria-label]="'dashboard.clearSearch' | translate"
+          >
+            ✕
+          </button>
+        }
+      </div>
+    </section>
+
     <section class="quick-section" aria-labelledby="quick-heading">
       <h2 id="quick-heading" class="section-title">{{ 'dashboard.newTourSection' | translate }}</h2>
       <div class="quick-grid quick-grid--single">
@@ -67,37 +92,53 @@
 
     <section class="empty-section" aria-labelledby="empty-heading">
       <h2 id="empty-heading" class="visually-hidden">{{ 'dashboard.tourListHidden' | translate }}</h2>
-      <div class="empty-card" *ngIf="tours.length === 0">
-        <div class="empty-visual" aria-hidden="true">
-          <span class="empty-orbit"></span>
-          <span class="empty-pin">📍</span>
-        </div>
-        <h3 class="empty-title">{{ 'dashboard.emptyTitle' | translate }}</h3>
-        <p class="empty-text">
-          {{ 'dashboard.emptyText' | translate }}
-        </p>
-        <p class="empty-hint">{{ 'dashboard.emptyHint' | translate }}</p>
-      </div>
 
-      <div class="tour-list-card" *ngIf="tours.length > 0">
-        <h3 class="tour-list-title">{{ 'dashboard.yourTours' | translate }}</h3>
-        <ul class="tour-items">
-          <li class="tour-item" *ngFor="let tour of tours">
-            <div class="tour-copy">
-              <strong>{{ tour.name }}</strong>
-              <span>{{ tour.fromLocation }} → {{ tour.toLocation }}</span>
-            </div>
-            <div class="tour-actions">
-              <button type="button" class="tour-open-btn" (click)="viewTour(tour.id!)">
-                {{ 'dashboard.details' | translate }}
-              </button>
-              <button type="button" class="tour-delete-btn" (click)="deleteTour(tour.id!)">
-                {{ 'dashboard.delete' | translate }}
-              </button>
-            </div>
-          </li>
-        </ul>
-      </div>
+      @if (loading) {
+        <div class="search-status">⏳ {{ 'tourList.loading' | translate }}</div>
+      }
+
+      @if (!loading && tours.length === 0 && !searchQuery) {
+        <div class="empty-card">
+          <div class="empty-visual" aria-hidden="true">
+            <span class="empty-orbit"></span>
+            <span class="empty-pin">📍</span>
+          </div>
+          <h3 class="empty-title">{{ 'dashboard.emptyTitle' | translate }}</h3>
+          <p class="empty-text">{{ 'dashboard.emptyText' | translate }}</p>
+          <p class="empty-hint">{{ 'dashboard.emptyHint' | translate }}</p>
+        </div>
+      }
+
+      @if (!loading && tours.length === 0 && searchQuery) {
+        <div class="empty-card search-empty-card">
+          <h3 class="empty-title">{{ 'dashboard.searchEmpty' | translate }}</h3>
+          <button type="button" class="tour-open-btn" (click)="clearSearch()">{{ 'dashboard.clearSearch' | translate }}</button>
+        </div>
+      }
+
+      @if (!loading && tours.length > 0) {
+        <div class="tour-list-card">
+          <h3 class="tour-list-title">{{ 'dashboard.yourTours' | translate }}</h3>
+          <ul class="tour-items">
+            @for (tour of tours; track tour.id) {
+              <li class="tour-item">
+                <div class="tour-copy">
+                  <strong>{{ tour.name }}</strong>
+                  <span>{{ tour.fromLocation }} → {{ tour.toLocation }}</span>
+                </div>
+                <div class="tour-actions">
+                  <button type="button" class="tour-open-btn" (click)="viewTour(tour.id!)">
+                    {{ 'dashboard.details' | translate }}
+                  </button>
+                  <button type="button" class="tour-delete-btn" (click)="deleteTour(tour.id!)">
+                    {{ 'dashboard.delete' | translate }}
+                  </button>
+                </div>
+              </li>
+            }
+          </ul>
+        </div>
+      }
     </section>
   </main>
 </div>

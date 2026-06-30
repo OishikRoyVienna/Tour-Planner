@@ -162,35 +162,26 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label for="distance">{{ 'tourForm.distance' | translate }}</label>
-            <div class="input-with-icon">
-              <span class="input-icon">📏</span>
-              <input
-                type="number"
-                id="distance"
-                [(ngModel)]="tour.distance"
-                name="distance"
-                min="0"
-                step="0.1"
-                placeholder="0.0"
-                class="form-input"
-              />
+            <span class="field-label">{{ 'tourForm.distance' | translate }}</span>
+            <div class="computed-value">
+              <span class="computed-icon" aria-hidden="true">📏</span>
+              @if (tour.distance) {
+                <span>{{ tour.distance }} km</span>
+              } @else {
+                <span class="computed-placeholder">{{ 'tourForm.notCalculated' | translate }}</span>
+              }
             </div>
           </div>
 
           <div class="form-group">
-            <label for="estimatedTime">{{ 'tourForm.time' | translate }}</label>
-            <div class="input-with-icon">
-              <span class="input-icon">⏱️</span>
-              <input
-                type="number"
-                id="estimatedTime"
-                [(ngModel)]="tour.estimatedTime"
-                name="estimatedTime"
-                min="0"
-                [attr.placeholder]="'tourForm.timePh' | translate"
-                class="form-input"
-              />
+            <span class="field-label">{{ 'tourForm.time' | translate }}</span>
+            <div class="computed-value">
+              <span class="computed-icon" aria-hidden="true">⏱️</span>
+              @if (tour.estimatedTime) {
+                <span>{{ tour.estimatedTime | duration }}</span>
+              } @else {
+                <span class="computed-placeholder">{{ 'tourForm.notCalculated' | translate }}</span>
+              }
             </div>
             <span class="input-hint">{{ 'tourForm.timeHint' | translate }}</span>
           </div>
