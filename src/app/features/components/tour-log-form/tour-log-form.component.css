@@ -15,18 +15,18 @@
   padding: 20px;
 }
 
-h2 { margin-bottom: 1.5rem; color: #333; }
+h2 { margin-bottom: 1.5rem; color: var(--color-text); }
 
 .error-message {
-  background: #ffebee;
-  color: #c62828;
+  background: var(--color-error-bg);
+  color: var(--color-error-text);
   padding: 1rem;
   border-radius: 4px;
   margin-bottom: 1rem;
 }
 
 .tour-log-form {
-  background: #fff;
+  background: var(--color-surface);
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -38,7 +38,7 @@ h2 { margin-bottom: 1.5rem; color: #333; }
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 600;
-  color: #555;
+  color: var(--color-text-muted);
 }
 
 .form-group input,
@@ -46,9 +46,11 @@ h2 { margin-bottom: 1.5rem; color: #333; }
 .form-group select {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   font-size: 1rem;
+  background: var(--color-surface);
+  color: var(--color-text);
 }
 
 .form-group input:focus,
@@ -72,7 +74,7 @@ h2 { margin-bottom: 1.5rem; color: #333; }
   cursor: pointer;
 }
 
-.star { color: #ddd; transition: all 0.2s; }
+.star { color: var(--color-border); transition: all 0.2s; }
 .star.filled { color: #FFC107; }
 .star:hover { transform: scale(1.2); }
 
@@ -82,7 +84,7 @@ h2 { margin-bottom: 1.5rem; color: #333; }
   justify-content: flex-end;
   margin-top: 2rem;
   padding-top: 1rem;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid var(--color-border);
 }
 
 .btn-primary, .btn-secondary {
@@ -104,14 +106,14 @@ h2 { margin-bottom: 1.5rem; color: #333; }
 }
 
 .btn-primary:disabled {
-  background: #ccc;
+  background: var(--color-border);
   cursor: not-allowed;
 }
 
 .btn-secondary {
-  background: #f5f5f5;
-  color: #333;
-  border: 1px solid #ddd;
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
 }
 
 @media (max-width: 600px) {

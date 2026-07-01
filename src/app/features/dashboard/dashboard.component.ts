@@ -10,11 +10,12 @@ import { Tour } from '../models/tour.model';
 import { TranslatePipe } from '../../core/translate.pipe';
 import { I18nService } from '../../core/i18n.service';
 import { LanguageToggleComponent } from '../../core/language-toggle.component';
+import { ThemeToggleComponent } from '../../core/theme-toggle.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe, LanguageToggleComponent],
+  imports: [CommonModule, FormsModule, TranslatePipe, LanguageToggleComponent, ThemeToggleComponent],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
 })

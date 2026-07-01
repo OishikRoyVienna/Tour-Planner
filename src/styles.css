@@ -1,5 +1,35 @@
 :root {
   --app-font: system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, sans-serif;
+
+  --color-bg: #eef0f7;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f5f5f5;
+  --color-text: #1c1b22;
+  --color-text-muted: #555;
+  --color-border: #e0e0e0;
+  --color-border-light: #f0f0f0;
+  --color-accent: #667eea;
+  --color-accent2: #764ba2;
+  --color-info-bg: #e3f2fd;
+  --color-info-text: #1976d2;
+  --color-error-bg: #ffebee;
+  --color-error-text: #c62828;
+}
+
+body.dark {
+  --color-bg: #12111c;
+  --color-surface: #1e1c2e;
+  --color-surface-alt: #252338;
+  --color-text: #e8e6f0;
+  --color-text-muted: #9895a8;
+  --color-border: #312e4a;
+  --color-border-light: #2a2740;
+  --color-accent: #7b8ff5;
+  --color-accent2: #9b7dd4;
+  --color-info-bg: #0d2137;
+  --color-info-text: #64b5f6;
+  --color-error-bg: #2d1515;
+  --color-error-text: #ef9a9a;
 }
 
 *,
@@ -14,6 +44,9 @@ body {
   font-family: var(--app-font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 input,
@@ -21,4 +54,35 @@ button,
 select,
 textarea {
   font-family: inherit;
+}
+
+/* Dashboard dark mode — must be global to bypass Angular view encapsulation */
+body.dark .dashboard {
+  --dash-text: #e8e6f0;
+  --dash-muted: #9895a8;
+  --dash-soft: #12111c;
+  --dash-card: #1e1c2e;
+  --dash-border: rgba(123, 143, 245, 0.2);
+  --dash-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(102, 126, 234, 0.06), transparent 55%),
+    radial-gradient(900px 500px at 100% 0%, rgba(118, 75, 162, 0.05), transparent 50%),
+    linear-gradient(180deg, #12111c 0%, #15131f 45%, #12111c 100%);
+}
+
+body.dark .dashboard .tour-item {
+  background: #252338;
+}
+
+body.dark .dashboard .tour-open-btn {
+  background: #1e1c2e;
+}
+
+body.dark input:not([type='file']):not([type='checkbox']):not([type='radio']):not([type='range']),
+body.dark textarea,
+body.dark select {
+  background-color: var(--color-surface-alt);
+  color: var(--color-text);
+  border-color: var(--color-border);
+  color-scheme: dark;
 }

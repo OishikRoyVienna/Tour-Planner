@@ -19,7 +19,7 @@
 }
 
 .register-card {
-  background: white;
+  background: var(--color-surface);
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -30,7 +30,7 @@
 h2 {
   text-align: center;
   margin-bottom: 1.5rem;
-  color: #333;
+  color: var(--color-text);
 }
 
 .form-group {
@@ -40,17 +40,19 @@ h2 {
 label {
   display: block;
   margin-bottom: 0.5rem;
-  color: #555;
+  color: var(--color-text-muted);
   font-weight: 500;
 }
 
 input {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   font-size: 1rem;
   box-sizing: border-box;
+  background: var(--color-surface);
+  color: var(--color-text);
 }
 
 input:focus {
@@ -88,7 +90,7 @@ button:hover:not(:disabled) {
 }
 
 button:disabled {
-  background: #ccc;
+  background: var(--color-border);
   cursor: not-allowed;
 }
 
@@ -96,7 +98,7 @@ button:disabled {
   margin-top: 1rem;
   text-align: center;
   font-size: 0.9rem;
-  color: #666;
+  color: var(--color-text-muted);
 }
 
 .footer-link a {
@@ -105,11 +107,11 @@ button:disabled {
 }
 
 .error {
-  color: #c00;
+  color: var(--color-error-text);
   margin-top: 1rem;
   text-align: center;
   padding: 0.5rem;
-  background: #fee;
+  background: var(--color-error-bg);
   border-radius: 4px;
 }
 
