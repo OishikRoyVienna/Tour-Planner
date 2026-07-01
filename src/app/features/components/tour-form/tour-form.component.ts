@@ -8,13 +8,14 @@ import { Tour } from '../../models/tour.model';
 import { TranslatePipe } from '../../../core/translate.pipe';
 import { DurationPipe } from '../../../core/duration.pipe';
 import { LanguageToggleComponent } from '../../../core/language-toggle.component';
+import { ThemeToggleComponent } from '../../../core/theme-toggle.component';
 import { I18nService } from '../../../core/i18n.service';
 import { environment } from '../../environments/environments';
 
 @Component({
   selector: 'app-tour-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe, DurationPipe, LanguageToggleComponent],
+  imports: [CommonModule, FormsModule, TranslatePipe, DurationPipe, LanguageToggleComponent, ThemeToggleComponent],
   templateUrl: './tour-form.component.html',
   styleUrl: './tour-form.component.css'
 })

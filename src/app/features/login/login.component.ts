@@ -6,11 +6,12 @@ import { AuthService } from '../services/auth.service';
 import { TranslatePipe } from '../../core/translate.pipe';
 import { I18nService } from '../../core/i18n.service';
 import { LanguageToggleComponent } from '../../core/language-toggle.component';
+import { ThemeToggleComponent } from '../../core/theme-toggle.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink, TranslatePipe, LanguageToggleComponent],
+  imports: [FormsModule, CommonModule, RouterLink, TranslatePipe, LanguageToggleComponent, ThemeToggleComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })

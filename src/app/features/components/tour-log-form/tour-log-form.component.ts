@@ -6,12 +6,13 @@ import { TourLogService } from '../../services/tour-log.service';
 import { TourLog } from '../../models/tour-log.model';
 import { TranslatePipe } from '../../../core/translate.pipe';
 import { LanguageToggleComponent } from '../../../core/language-toggle.component';
+import { ThemeToggleComponent } from '../../../core/theme-toggle.component';
 import { I18nService } from '../../../core/i18n.service';
 
 @Component({
   selector: 'app-tour-log-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe, LanguageToggleComponent],
+  imports: [CommonModule, FormsModule, TranslatePipe, LanguageToggleComponent, ThemeToggleComponent],
   templateUrl: './tour-log-form.component.html',
   styleUrl: './tour-log-form.component.css'
 })

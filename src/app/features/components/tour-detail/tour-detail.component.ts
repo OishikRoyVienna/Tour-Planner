@@ -10,11 +10,12 @@ import { I18nService } from '../../../core/i18n.service';
 import { TranslatePipe } from '../../../core/translate.pipe';
 import { DurationPipe } from '../../../core/duration.pipe';
 import { environment } from '../../environments/environments';
+import { ThemeToggleComponent } from '../../../core/theme-toggle.component';
 
 @Component({
   selector: 'app-tour-detail',
   standalone: true,
-  imports: [CommonModule, TourLogListComponent, TranslatePipe, DurationPipe],
+  imports: [CommonModule, TourLogListComponent, TranslatePipe, DurationPipe, ThemeToggleComponent],
   templateUrl: './tour-detail.component.html',
   styleUrl: './tour-detail.component.css'
 })
